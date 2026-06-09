@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+data/veille_diif.db
+data/faiss_index*
+env_rag/
+.venv/
+.git/
+*.log
+tests/
+.pytest_cache/
+_test_agentic.py
+model_cache/
+local_packages/
+.claude/
