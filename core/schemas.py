@@ -66,7 +66,8 @@ class SVIADeps:
     zone_hint: str | None = None
     cible_hint: str | None = None
     top_k: int = 8
+    chunks_trouves: list = field(default_factory=list)
     sources_collectees: list = field(default_factory=list)
-    requete_utilisee: str = ""
+    requete_rag_utilisee: str = ""
     dimension_detectee: str | None = None
     contexte_formate: str = ""

@@ -249,14 +249,14 @@ def create_sources_default(conn):
         return
     now = datetime.utcnow().isoformat()
     sources = [
-        ("CGAP",              "https://www.cgap.org/feed",                      "rss", "en"),
-        ("FinDev Gateway",    "https://www.findevgateway.org/rss.xml",           "rss", "en"),
-        ("GSMA Mobile Money", "https://www.gsma.com/mobilefordevelopment/feed/", "rss", "en"),
-        ("AFI Network",       "https://www.afi-global.org/feed/",                "rss", "en"),
-        ("Agence Ecofin",     "https://www.agenceecofin.com/rss",                "rss", "fr"),
-        ("Banque de France",  "https://www.banque-france.fr/rss/actualites",     "rss", "fr"),
-        ("BIS Research",      "https://www.bis.org/rss/bis_research.rss",        "rss", "en"),
-        ("BEAC officiel",     "https://www.beac.int/",                           "web", "fr"),
+        ("CGAP",           "https://www.cgap.org",                      "web", "en"),
+        ("FinDev Gateway", "https://www.findevgateway.org",             "rss", "en"),
+        ("GSMA",           "https://www.gsma.com/newsroom",             "web", "en"),
+        ("AFI Global",     "https://afi-global.org",                    "web", "en"),
+        ("Agence Ecofin",  "https://www.agenceecofin.com/rss",          "rss", "fr"),
+        ("Banque de France", "https://www.banque-france.fr",            "web", "fr"),
+        ("BRI / BIS",      "https://www.bis.org",                       "rss", "en"),
+        ("BEAC officiel",  "https://www.beac.int/",                     "web", "fr"),
     ]
     for nom, url, type_src, langue in sources:
         cursor.execute("""

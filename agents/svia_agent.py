@@ -216,7 +216,7 @@ def search_corpus(
         if len(chunks_uniques) >= effective_k:
             break
 
-    ctx.deps.requete_utilisee = requete_enrichie
+    ctx.deps.requete_rag_utilisee = requete_enrichie
 
     vus_urls: set = set()
     for chunk in chunks_uniques:
@@ -604,7 +604,7 @@ def orchestrer(
         "sources":     deps.sources_collectees,
         "suggestions": [s.model_dump() for s in data.suggestions],
         "dimension":   data.dimension,
-        "requete_rag": data.requete_rag or deps.requete_utilisee,
+        "requete_rag": data.requete_rag or deps.requete_rag_utilisee,
     }
 
     # ── Mode non-streaming ────────────────────────────────────────────────────
