@@ -1,0 +1,134 @@
+{
+  "type": "agentique",
+  "date": "2026-06-15T18:32:51.951930",
+  "source": "interactions",
+  "judge_model": "claude-haiku-4-5-20251001",
+  "k": 8,
+  "n_questions": 7,
+  "rapport": {
+    "averages": {
+      "search_corpus_appele": 0.2857142857142857,
+      "reformulation": 0.14285714285714285,
+      "nb_recherches": 0.42857142857142855,
+      "sources_non_vides": 0.2857142857142857,
+      "faithfulness": 0.4671428571428572,
+      "answer_relevancy": 0.6571428571428573,
+      "context_relevance": 0.19999999999999998,
+      "qualite_globale": 0.5042857142857143
+    },
+    "cases": [
+      {
+        "name": "je veux que tu sois beaucoup plus littérale. je ne veux pas ",
+        "dimension": "Utilisation",
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 0.0,
+          "reformulation": 0.0,
+          "nb_recherches": 0.0,
+          "sources_non_vides": 0.0,
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.8
+        },
+        "duree_s": 7.3
+      },
+      {
+        "name": "je veux que tu developpes la dimension qualité",
+        "dimension": "Qualité",
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.35,
+          "answer_relevancy": 0.65,
+          "context_relevance": 0.5,
+          "qualite_globale": 0.4
+        },
+        "duree_s": 80.4
+      },
+      {
+        "name": "édifie moi sur ce que tu connais",
+        "dimension": "Innovation financière",
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 0.0,
+          "reformulation": 0.0,
+          "nb_recherches": 0.0,
+          "sources_non_vides": 0.0,
+          "faithfulness": 0.2,
+          "answer_relevancy": 0.6,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.3
+        },
+        "duree_s": 7.5
+      },
+      {
+        "name": "hell",
+        "dimension": null,
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 0.0,
+          "reformulation": 0.0,
+          "nb_recherches": 0.0,
+          "sources_non_vides": 0.0,
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.1
+        },
+        "duree_s": 2.6
+      },
+      {
+        "name": "Non. de quelle autre thématique intéressante peut-on parler?",
+        "dimension": null,
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 0.0,
+          "reformulation": 0.0,
+          "nb_recherches": 0.0,
+          "sources_non_vides": 0.0,
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.5,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.3
+        },
+        "duree_s": 8.7
+      },
+      {
+        "name": "parle moi du mobile money",
+        "dimension": "Utilisation",
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.92,
+          "answer_relevancy": 0.95,
+          "context_relevance": 0.9,
+          "qualite_globale": 0.93
+        },
+        "duree_s": 34.9
+      },
+      {
+        "name": "bonjour",
+        "dimension": null,
+        "source": "interactions",
+        "scores": {
+          "search_corpus_appele": 0.0,
+          "reformulation": 0.0,
+          "nb_recherches": 0.0,
+          "sources_non_vides": 0.0,
+          "faithfulness": 0.8,
+          "answer_relevancy": 0.9,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.7
+        },
+        "duree_s": 1.6
+      }
+    ]
+  }
+}

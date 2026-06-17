@@ -1,0 +1,204 @@
+Testset SVIA — 2026-06-16 21:21
+Total : 30 questions
+
+[case_001] [Accès] [synthese]
+Q: According to the text, what are the three key success drivers that enabled 80% of rural women earning less than INR 25,000 annually to enroll in at least one insurance scheme under the Jan Suraksha programs?
+R: According to the text, the three key success drivers that enabled 80% of rural women earning less than INR 25,000 annually to enroll in at least one insurance scheme under the Jan Suraksha programs ar...
+Chunks: c421cb9b-6204-4a8c-ad23-b41d18d3143a, 35e1c831-ed25-4e7b-8bb2-0b8cf4ba3bff, 02a90177-a138-49d4-ba5f-84e84a49d2e7, d09b6a7c-e9fc-4db7-a8c8-394ee04ab3ee
+
+[case_002] [Accès] [factuelle]
+Q: Selon le texte, quels sont les trois éléments clés qui constituent la construction d'une marque bancaire au-delà des campagnes publicitaires traditionnelles, tels que mentionnés par la responsable de la communication d'Access Bank Cameroon ?
+R: Selon le texte, les trois éléments clés qui constituent la construction d'une marque bancaire au-delà des campagnes publicitaires traditionnelles, tels que mentionnés par Mathilde Claudine Nikom Eben,...
+Chunks: cc4f8cc4-91ac-4ea2-8bff-063943fe52c4, 23c1b68f-cc11-4abb-9d3e-ad771aba61bd, fc073cb6-0fff-4649-bdf0-4427e052a3eb, 83c40a7d-1938-43ee-880f-4d8220b9e7bc
+
+[case_003] [Qualité] [synthese]
+Q: What quality criteria or operational characteristics distinguish Tier 1 institutions like Baobab from other small financial institutions in the context of instant payment systems readiness?
+R: # Tier 1 Institutions: Quality Criteria for IPS Readiness
+
+According to CGAP research, Tier 1 institutions like Baobab distinguish themselves through two critical characteristics:
+
+**Strategic Alignme...
+Chunks: 1a61bacf-4645-43d4-9e17-7d2f044d69db, 7fb17592-6891-4293-a7f1-e96fcd6d6109, c3e16aab-ddea-45ea-84a5-167c20586a1d, 508e4527-6946-45c3-887f-e460e60f5d8a
+
+[case_004] [Éducation financière] [synthese]
+Q: Selon le ministre Patrick Muyaya, quel rôle l'éducation citoyenne et la responsabilisation des individus jouent-elles dans la lutte contre la désinformation en Afrique centrale, et comment cela s'articule-t-il avec l'approche collective qu'il préconise ?
+R: Selon le ministre Patrick Muyaya, l'éducation citoyenne repose sur l'instauration d'un **doute méthodique** : « Chacun doit instaurer un doute méthodique face à toute information qu'il reçoit, car cel...
+Chunks: e4ecd835-cfa7-457a-9834-e8e83f556f06, d2756900-9bd7-495a-be2a-1a400c88cc06, a684fcfb-d392-4a9e-afe8-32f7ce26e492, 9a25e4fd-303a-4e30-8d0d-eea505210e7b
+
+[case_005] [Protection des consommateurs] [synthese]
+Q: According to the text, how do international standards such as ISO and NIST contribute to consumer protection in mobile financial services across different jurisdictions in developing countries?
+R: According to the text, ISO and NIST international standards contribute to consumer protection in mobile financial services across different jurisdictions in developing countries by providing "a princi...
+Chunks: 635affa2-4f28-4fbe-82af-604dc408ab79, 5a41e908-25d8-4ba1-9f3c-77d0ec075a6f, 73e0a20d-762a-448a-aef4-457b27f16c4e, 585dd617-cf88-4015-bdfa-ba372abf75b5
+
+[case_006] [Utilisation] [factuelle]
+Q: What are the four key goals of bundled savings products for women that were identified by Women's World Banking during the She Counts 2019 workshop on product bundling?
+R: Based on the source text provided, I can only identify **one** of the four key goals explicitly mentioned by Women's World Banking during the She Counts 2019 workshop on product bundling:
+
+1. **Acquis...
+Chunks: b2d85505-2ac9-4c80-8b5b-0f7990120b28, 4ba98171-08af-47c9-bad7-70921f37f6c5, e3112283-1a8f-45e1-aeea-c2b87e9d4c16, 56559160-ef31-4fdb-8d0d-8a13e45607b1
+
+[case_007] [Innovation financière] [comparative]
+Q: How did the 2015 update to BCEAO's e-money regulation differ from the 2006 regulation in terms of mobile network operators' (MNOs) ability to independently develop digital financial services in WAEMU?
+R: According to the source text, the 2015 update to BCEAO's e-money regulation differed from the 2006 regulation primarily in clarifying the pathway for MNOs to create e-money-issuing subsidiaries. The 2...
+Chunks: 880acf6d-0439-4509-aa90-22106529256b, 69088ee7-10b9-4f5b-9b2a-d4545d9b3248, 71902019-94e9-481f-be4e-c217fa4ef33e, 5ab63e81-f229-435d-850e-10fae35b857a
+
+[case_008] [Protection des consommateurs] [synthese]
+Q: What specific consumer protection mechanisms should financial service providers in CEMAC implement to ensure that women's financial accounts used for social protection payments remain secure and private, as evidenced by the Niger mobile money example?
+R: # Consumer Protection Mechanisms for Women's Financial Accounts in CEMAC
+
+Based on the source text provided, **no specific consumer protection mechanisms are explicitly detailed**. However, the Niger ...
+Chunks: 637b3565-1f40-4200-9d62-70f6d51e57b5, dfe694d2-79af-4b85-b1a1-222974407e9c, 5c3d3b52-bcdd-442d-9954-364bbbfef908, a234deb7-f3b4-4a2e-8afa-d7813ac879b9
+
+[case_009] [Accès] [factuelle]
+Q: Quels sont les quatre modules structurant la session d'introduction en e-learning du programme de formation en finance agricole et rurale (FAR) de l'édition 2026 ?
+R: # Les quatre modules de la session d'introduction en e-learning (FAR 2026)
+
+La session d'introduction en e-learning du programme de formation en finance agricole et rurale (FAR), édition 2026, s'étend...
+Chunks: 03e29294-b044-4fdc-9c55-5fe88b74e6d0, 20be3ae6-cafc-4597-8435-fb7c75725be4, 76e8ead5-66fe-4edb-8f88-947551efc553
+
+[case_010] [Utilisation] [factuelle]
+Q: Quels sont les différents modes de paiement disponibles pour les contribuables des CFLP qui utilisent la plateforme Tresor Pay au Cameroun ?
+R: # Modes de paiement Tresor Pay pour les CFLP au Cameroun
+
+Selon la DGI, les contribuables des Centres de Fiscalité Locale et des Particuliers (CFLP) de Yaoundé disposent de six modes de paiement via l...
+Chunks: bb4ef192-f85e-4d38-b69a-3a4228eadce5, 8b0dd58f-0af6-4aad-b0bd-5fb5c72ae715, 3b09426e-f0f5-4127-876d-b69ad4b9d3b3, b83712d0-e099-4a75-b17d-34f12bc5d613
+
+[case_011] [Utilisation] [synthese]
+Q: Comment la DGI articule-t-elle l'accès aux services de paiement en ligne avec les solutions mobiles pour améliorer l'utilisation de la plateforme Tresor Pay par les contribuables sans connexion internet ?
+R: # Articulation de l'accès aux services de paiement par la DGI
+
+La DGI articule l'accès aux services de paiement en ligne et mobiles via la plateforme Tresor Pay (dgi.tresorpublic.cm) selon deux approc...
+Chunks: bb4ef192-f85e-4d38-b69a-3a4228eadce5, 8b0dd58f-0af6-4aad-b0bd-5fb5c72ae715, 3b09426e-f0f5-4127-876d-b69ad4b9d3b3, b83712d0-e099-4a75-b17d-34f12bc5d613
+
+[case_012] [Utilisation] [definition]
+Q: Qu'est-ce que les Centres de Fiscalité Locale et des Particuliers (CFLP) et quel est leur rôle dans la gestion fiscale numérique mise en place par la DGI camerounaise ?
+R: # Les CFLP et la gestion fiscale numérique camerounaise
+
+Les **Centres de Fiscalité Locale et des Particuliers (CFLP)** sont des structures créées par la Direction Générale des Impôts (DGI) camerounai...
+Chunks: bb4ef192-f85e-4d38-b69a-3a4228eadce5, 8b0dd58f-0af6-4aad-b0bd-5fb5c72ae715, 3b09426e-f0f5-4127-876d-b69ad4b9d3b3, b83712d0-e099-4a75-b17d-34f12bc5d613
+
+[case_013] [Protection des consommateurs] [factuelle]
+Q: Quels sont les critères d'éligibilité et les données utilisées par l'Agence des services et des paiements (ASP) pour identifier automatiquement les ménages bénéficiaires du chèque énergie en 2025?
+R: # Critères d'éligibilité et données utilisées par l'ASP pour le chèque énergie 2025
+
+L'Agence des services et des paiements (ASP) identifie automatiquement les ménages éligibles au chèque énergie sur ...
+Chunks: 3bc2257b-91df-4f34-af1a-e31b0e5f97b6, 8944df06-06da-43eb-9667-1a628ce7027d, 42050466-3e9a-4f5f-9d53-318ca3018f60, de579d87-b994-4951-8648-3e9aa0400055
+
+[case_014] [Qualité] [synthese]
+Q: Quels sont les mécanismes et critères de qualité utilisés pour assurer l'équité et l'efficacité dans la distribution des prestations sociales (RSA, AAH, ASS) par les caisses d'allocations familiales et la MSA en matière d'inclusion financière des populations vulnérables?
+R: # Réponse : Mécanismes et critères de qualité
+
+Le texte source ne contient **aucune information** sur les mécanismes et critères de qualité assurant l'équité et l'efficacité dans la distribution des p...
+Chunks: 4a104e0e-7cb5-4163-a5f4-2b6ce11deaef, 992da816-bf71-441b-a4f6-01c946e627d6, 22d69640-91c9-4e04-a444-938cc0584c79, 7d57eaff-9dc8-4c04-b3ab-4301b7b5701d
+
+[case_015] [Éducation financière] [synthese]
+Q: Selon le texte, quel est le besoin de financement estimé pour combler le déficit de logements en Afrique d'ici 2030, et quelles implications cela représente-t-il pour l'inclusion financière et l'accès au crédit immobilier dans la région CEMAC ?
+R: # Analyse : Besoin de financement et implications pour l'inclusion financière CEMAC
+
+Selon le texte source, **le besoin de financement pour combler le déficit de logements africain est estimé à 1 400 ...
+Chunks: c068da4b-492b-4c39-8d1f-84759ab83973, c0c23da7-dda3-4a63-87b2-82dc70e62eee, dd7a646d-9ecc-4238-95fc-b2f20023a94c, 8d6ce192-f270-44b3-a641-790b20d82396
+
+[case_016] [Utilisation] [comparative]
+Q: According to the text, what specific cost reductions did One Acre Fund achieve when it digitized agricultural loan repayments, and how does this compare to the cost savings observed in digital payments to coffee farmers in Uganda?
+R: According to the text, One Acre Fund achieved significant cost reductions when digitizing agricultural loan repayments: it cut repayment collection times by 24 percent and reduced costs by 80 percent....
+Chunks: c96e64e5-fe20-4e08-a899-0e91b8b3bc48, c90649a1-1bfa-436f-874d-b808c68deff6, 157d3d4b-7786-4448-b1e1-7a431237ec67, d0253196-e0b0-4e27-af04-a632f3ba522e
+
+[case_017] [Éducation financière] [factuelle]
+Q: Quels sont les quatre axes stratégiques majeurs autour desquels s'articule la Stratégie nationale de Digitalisation de l'EFTP au Cameroun validée en mai 2026 ?
+R: # Les quatre axes stratégiques de la Stratégie nationale de Digitalisation de l'EFTP au Cameroun
+
+Selon le texte source, la Stratégie nationale de Digitalisation de l'Enseignement et de la Formation T...
+Chunks: 551b1596-6282-4d14-a79e-8807ad5ddac3, 3f574b66-8d42-4a59-9c45-ab0a6a37a90e, 42363784-f648-42ea-8cc9-12f60e3e7e6b, 243e91be-210a-4ce3-a3ac-fc760f9c5bd6
+
+[case_018] [Protection des consommateurs] [synthese]
+Q: How does Women's World Banking's TechEquity Program approach consumer protection in tech-enabled financial services by combining the roles of women policymakers, regulators, and supervisors with industry engagement?
+R: # Women's World Banking's TechEquity Program: Consumer Protection Approach
+
+Women's World Banking's TechEquity Program, funded by the Visa Foundation, addresses consumer protection in tech-enabled fin...
+Chunks: f4f3f0b0-7d30-48ff-90e5-5e66da7875a0, 867cb6bc-64ea-4df9-b938-09e303f9e633, 67e0aa86-9ee9-43c4-b373-9af98b2109b5, e9ee1bfb-9e6e-48a8-b697-b8f5913b17d2
+
+[case_019] [Éducation financière] [synthese]
+Q: What specific financial literacy topics were covered in the quizzes organized during the National Bank of Tajikistan's Financial Literacy Festival, and how do these topics align with the central bank's objective of promoting responsible financial behavior?
+R: According to the source document, the National Bank of Tajikistan's Financial Literacy Festival quizzes, organized on 1 May 2026 in Dushanbe, covered seven specific topics:
+
+1. Household budgeting
+2. ...
+Chunks: 0ae76a95-661a-475e-80b0-36eb3277244e, 74dc5fc6-4ea0-4fd5-9d78-b471cb8966f1
+
+[case_020] [Éducation financière] [synthese]
+Q: Quels sont les trois principaux piliers de la transformation numérique mise en œuvre par l'Assemblée nationale sénégalaise selon le texte?
+R: Selon le texte source, les trois principaux piliers de la transformation numérique de l'Assemblée nationale sénégalaise sont :
+
+1. **Le vote électronique sécurisé** : implémentation d'un système de vo...
+Chunks: db0bee34-a3e9-4235-a950-be1e25f87016, a65ef516-35b3-4a46-bf2a-fd8049b3a609, e66da390-9d4f-487c-8f2a-a6caa28ccb14, 6301fd64-a3d7-4487-a6ab-071d11dbd82b
+
+[case_021] [Qualité] [synthese]
+Q: What is the relationship between the number of participants in an interoperability scheme and the unit costs borne by each participant, and how does this dynamic affect the viability of interoperable payment systems in CEMAC markets?
+R: # Relationship Between Participants and Unit Costs in Interoperability Schemes
+
+According to the CGAP blog (January 2018), there is an **inverse relationship** between the number of scheme participant...
+Chunks: df907bed-c948-4050-a0be-9171b9bba6fc, 56d4fc7e-cef9-4665-afba-7143684412e2, 8e0e28a1-ae7e-40ca-bcfd-96286b46b356, 6827b4e2-b49e-411e-b193-0b6332f5aa45
+
+[case_022] [Innovation financière] [factuelle]
+Q: What are the two main financial inclusion targets that Nigeria aims to achieve according to the workshop discussions, and what gender-specific gap does the country seek to close?
+R: According to the workshop discussions documented in the source text, Nigeria's two main financial inclusion targets are:
+
+1. **95% financial inclusion** – achieving near-universal access to financial ...
+Chunks: e393cb2c-3365-48d5-a647-f15e120f632f, a6523ae6-4c83-488d-a60b-08f78a6b2eda, abd31a50-a811-41e3-85f5-12443494437e, b45d57f7-84f5-45d8-8915-fac062521fcc
+
+[case_023] [Innovation financière] [synthese]
+Q: How does Turkey's approach to digital lending ecosystem differ from traditional models in terms of the roles played by banks versus fintech firms, and what systemic benefits does this complementary structure provide?
+R: # Turkey's Digital Lending Ecosystem: Banks and Fintech Complementarity
+
+According to the AFI peer learning exchange, Turkey's approach distinguishes itself through a **complementary structure where b...
+Chunks: aa12650f-0efc-4dbd-8b6b-ed13e5e44b4e, 120bcf03-2c30-4b50-bb6b-9284808c7e18, 36d16e91-9da7-411f-aa0f-5310585238d7, aaa7423c-ae30-40cd-8dae-2e28048dea4d
+
+[case_024] [Accès] [synthese]
+Q: Quels sont les deux types de saisie sur compte bancaire distingués selon la nature du créancier, et comment se différencient-ils en termes de cadre réglementaire des frais bancaires ?
+R: # Deux types de saisie sur compte bancaire et leur cadre réglementaire
+
+Selon le texte source, deux types de saisie sur compte bancaire se distinguent par la nature du créancier :
+
+**1. La Saisie Admi...
+Chunks: 888433b5-9043-4d22-b45d-7aa5940dfdd8, d6ca8c29-2592-41b8-8fbd-90a01f20a633, 4a6b4a7f-b595-4646-afd5-226fa37c6770, 7ea9681a-e892-464e-94ea-d22102121dc0
+
+[case_025] [Accès] [synthese]
+Q: How does Fenix International leverage its existing ReadyPay solar payment infrastructure to address the financial inclusion barrier to education access in rural Uganda?
+R: # How Fenix International Leverages ReadyPay to Address Education Finance Barriers
+
+Fenix International uses its ReadyPay solar payment infrastructure to tackle education access barriers through three...
+Chunks: 2aacb20d-d43a-40da-832d-6262c595e387, 7e264b8f-c3cd-4c50-8c00-e3b8488a8b4e, 6ea12bed-5021-4d5b-8abd-190041d103a3, a2626f42-e31d-4ef3-98e8-7de43cb33c89
+
+[case_026] [Utilisation] [synthese]
+Q: Selon le texte, comment l'introduction de taxes sur le mobile money affecte-t-elle les comportements d'utilisation des services financiers numériques au Cameroun et en Centrafrique, et quelles en sont les conséquences pour l'inclusion financière ?
+R: # Impact des taxes sur le mobile money en Cameroun et Centrafrique
+
+Selon le texte, l'introduction de taxes sur le mobile money provoque une **baisse massive des transactions** : -40% au Cameroun et -...
+Chunks: 3845a2d1-d2a1-426e-a6c6-f5d8e99226c0, 159dcc07-90d1-4028-a8dd-4bbc723f17bf, e4c4d312-9407-48bc-835c-2867fa3cac9e, 9f975b66-7f59-4e7d-a5bb-36c9a3cfb34d
+
+[case_027] [Éducation financière] [factuelle]
+Q: According to the text, what specific role does technology play in enhancing financial education as part of consumer protection frameworks in Sub-Saharan Africa's digital financial services ecosystem?
+R: According to the text, technology plays a specific role in enhancing financial education through two key mechanisms within consumer protection frameworks:
+
+1. **Direct enhancement of financial educati...
+Chunks: e52e2f92-95c6-427e-aff5-d9f6227c59de, 7616aa6c-2c24-4f43-9b1f-39cb15d4c134
+
+[case_028] [Qualité] [definition]
+Q: How does the text define the relationship between financial inclusion and the achievement of SDG 10 (reducing inequality) and SDG 16 (peaceful societies) in fragile and conflict-affected states within the CEMAC region?
+R: # Financial Inclusion and SDGs 10 & 16 in Fragile States
+
+According to the text, financial inclusion addresses both SDG 10 (reducing inequality) and SDG 16 (peaceful societies), particularly in fragil...
+Chunks: a02f839c-7216-4eb5-bb19-f9946d09cc0c, 3aea8b2f-1f56-4efc-a017-b4bb3ddb30df, 86b0caf3-5874-446a-a8d7-f9b6465f0481, f9b29baa-ddb8-4ae1-aefb-521865872485
+
+[case_029] [Accès] [definition]
+Q: According to the Women's World Banking research on Indonesia's creative industry, what is the 'interaction effect' and how does it differ from the independent impact of financial inclusion or income alone on women's economic empowerment?
+R: According to Women's World Banking's "Empowering Indonesia's Artisans" report, the "interaction effect" refers to the combined impact of financial inclusion coupled with income on women's economic emp...
+Chunks: e7a42d12-e5b8-40e6-805f-248395d47242, 48d7f2a5-718b-42da-973b-64cbb2898079, 42b0e918-51a5-4d6b-b37c-7edfe8052485
+
+[case_030] [Accès] [synthese]
+Q: Selon le texte, comment les points d'accès privatif aux espèces contribuent-ils à compenser la baisse des DAB en zone rurale, et quel est leur taux de croissance par rapport aux distributeurs automatiques ?
+R: Selon le texte, les points d'accès privatif aux espèces compensent la baisse des DAB en zone rurale de la manière suivante :
+
+Alors que le nombre de DAB diminue (-3,9 % entre 2022 et fin 2023), les se...
+Chunks: 6be2448c-9103-4b87-98ed-35730e8f2296, 886ddc88-9929-458b-b125-8d76021f894b, 098cc308-c7a2-40a3-8639-0f528986fa5f
+

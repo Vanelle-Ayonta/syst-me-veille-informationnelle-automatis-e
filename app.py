@@ -4,6 +4,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from core.auth import get_current_user, logout
 from ui.components.header import render_header
 
+# ── Auto-initialisation de la base de données (idempotent) ──────────────────
+# Crée les tables si elles n'existent pas encore (premier démarrage, container
+# sans volume, ou base fraîche). Sans risque : CREATE TABLE IF NOT EXISTS.
+@st.cache_resource
+def _init_database():
+    from init_db import get_connection, create_tables, create_admin_default
+    conn = get_connection()
+    create_tables(conn)
+    create_admin_default(conn)
+    conn.close()
+
+_init_database()
+# ─────────────────────────────────────────────────────────────────────────────
+
 
 def inject_css():
     st.markdown("""
@@ -172,28 +186,57 @@ def inject_css():
         padding: 12px 16px !important;
     }
 
-    /* ── Chatbot bulles ── */
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
+    /* ── Chatbot bulles — distinction robuste via marqueur de rôle ── */
+    /* Marqueur invisible injecté dans chaque message (indépendant des
+       data-testid internes de Streamlit, qui changent selon les versions). */
+    .svia-role { display: none !important; }
+    [data-testid="stChatMessage"] [data-testid="stMarkdownContainer"]:has(.svia-marker-hide) {
+        display: none !important;
+    }
+    /* Bulle utilisateur — bleu marine, alignée à droite */
+    [data-testid="stChatMessage"]:has(.svia-role-user) {
         background: linear-gradient(135deg,#002B5C,#003d7a) !important;
         border-radius: 16px 16px 4px 16px !important;
         padding: 12px 16px !important;
         margin-left: 15% !important;
         box-shadow: 0 2px 8px rgba(0,43,92,0.2) !important;
     }
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) * {
+    [data-testid="stChatMessage"]:has(.svia-role-user) * {
         color: #ffffff !important;
     }
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) {
+    /* Bulle SVIA — crème, liseré or, alignée à gauche */
+    [data-testid="stChatMessage"]:has(.svia-role-bot) {
         background: #FDF8EC !important;
-        border-radius: 16px 16px 16px 4px !important;
+        border-radius: 4px 16px 16px 16px !important;
         padding: 12px 16px !important;
         margin-right: 15% !important;
         border-left: 3px solid #C8A951 !important;
         box-shadow: 0 2px 8px rgba(200,169,81,0.1) !important;
     }
-    [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) * {
+    [data-testid="stChatMessage"]:has(.svia-role-bot) * {
         color: #002B5C !important;
     }
+    /* Indicateur « SVIA rédige… » (points qui pulsent) */
+    .svia-typing { display: flex; align-items: center; gap: 5px; }
+    .svia-typing .svia-dot {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: #C8A951 !important; display: inline-block;
+        animation: sviaPulse 1.2s infinite ease-in-out;
+    }
+    .svia-typing .svia-dot:nth-child(2) { animation-delay: .2s; }
+    .svia-typing .svia-dot:nth-child(3) { animation-delay: .4s; }
+    .svia-typing em { font-style: italic; font-size: 13px; }
+    @keyframes sviaPulse {
+        0%,80%,100% { opacity: .25; transform: translateY(0); }
+        40%         { opacity: 1;   transform: translateY(-3px); }
+    }
+    /* Curseur de frappe clignotant */
+    .svia-cursor {
+        display: inline-block; width: 2px; height: 1.05em;
+        background: #C8A951 !important; margin-left: 1px;
+        vertical-align: -2px; animation: sviaBlink 1s step-start infinite;
+    }
+    @keyframes sviaBlink { 50% { opacity: 0; } }
     [data-testid="stChatInput"] {
         border: 2px solid #002B5C !important;
         border-radius: 12px !important;
@@ -253,6 +296,28 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 inject_css()
+
+
+@st.cache_resource(show_spinner=False)
+def _precharger_rag():
+    """Préchauffe le modèle e5 + l'index FAISS dans un thread, une seule fois par
+    process, pour éviter les ~70 s de chargement au premier message du chatbot."""
+    import threading
+
+    def _warm():
+        try:
+            from core.rag.embedder import get_model
+            from core.rag.indexer import get_index
+            get_model()
+            get_index()
+        except Exception:
+            pass
+
+    threading.Thread(target=_warm, daemon=True, name="RAGWarmup").start()
+    return True
+
+
+_precharger_rag()
 
 # Force la sidebar ouverte à chaque chargement
 import streamlit.components.v1 as _components
@@ -391,6 +456,23 @@ if "auth_token" not in st.session_state:
 if "page" not in st.session_state:
     st.session_state["page"] = "login"
 
+# Préchauffage RAG en arrière-plan : charge e5 + l'index FAISS dès l'ouverture
+# de l'app (pendant le login), pour éviter ~70s de latence au 1er message.
+if not st.session_state.get("_rag_warmup_started"):
+    st.session_state["_rag_warmup_started"] = True
+    import threading as _thr
+
+    def _warmup_rag():
+        try:
+            from core.rag.embedder import get_model
+            from core.rag.indexer import get_index
+            get_model()
+            get_index()
+        except Exception:
+            pass
+
+    _thr.Thread(target=_warmup_rag, daemon=True, name="RAGWarmup").start()
+
 user = get_current_user(st.session_state)
 
 if not user:
@@ -474,6 +556,7 @@ with st.sidebar:
         admin = [
             ("Gestion sources",       "sources"),
             ("Utilisateurs",          "utilisateurs"),
+            ("Évaluation",            "evaluation"),
             ("Logs d\'activité",      "logs"),
             ("Administration système","admin"),
         ]
@@ -507,6 +590,8 @@ elif page == "sources" and user["role"] == "administrateur":
     from ui.pages.gestion_sources import render_sources; render_sources(user)
 elif page == "utilisateurs" and user["role"] == "administrateur":
     from ui.pages.gestion_utilisateurs import render_utilisateurs; render_utilisateurs(user)
+elif page == "evaluation" and user["role"] == "administrateur":
+    from ui.pages.evaluation import render_evaluation; render_evaluation(user)
 elif page == "logs" and user["role"] == "administrateur":
     from ui.pages.logs import render_logs; render_logs(user)
 elif page == "admin" and user["role"] == "administrateur":

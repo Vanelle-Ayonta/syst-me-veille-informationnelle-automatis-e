@@ -180,13 +180,21 @@ def sauvegarder_article(source_id: str, article: dict,
         now_iso()
     )
 
+    # Classification par mots-clés (sans LLM) — alimente les filtres
+    try:
+        from core.classification import classifier_article
+        cls = classifier_article(titre, contenu_propre)
+    except Exception:
+        cls = {"dimension": None, "zone": None, "cible": None}
+
     with get_db() as conn:
         conn.execute("""
             INSERT OR IGNORE INTO articles (
                 id, source_id, titre, contenu, resume,
                 url_original, publie_le, collecte_le,
-                langue, est_doublon, indexe, qualite_contenu
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?)
+                langue, est_doublon, indexe, qualite_contenu,
+                dimension, zone, cible
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?)
         """, (
             new_id(), source_id,
             titre,
@@ -197,5 +205,6 @@ def sauvegarder_article(source_id: str, article: dict,
             str(collecte_le),
             langue,
             qualite,
+            cls.get("dimension"), cls.get("zone"), cls.get("cible"),
         ))
     return True

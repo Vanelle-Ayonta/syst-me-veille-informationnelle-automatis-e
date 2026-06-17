@@ -22,3 +22,8 @@ torch>=2.0.0
 transformers==5.5.4
 tokenizers==0.22.2
 huggingface-hub==1.11.0
+
+# ── Évaluation (pydantic-evals) ───────────────────────────────────────────
+# Harnais d'éval agentique : scripts/eval_agentique.py. Juge = Anthropic via
+# le LLMJudge intégré de pydantic-evals (fourni avec pydantic-ai). Pas de RAGAS.
+pydantic-evals==1.105.0

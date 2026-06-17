@@ -214,6 +214,53 @@ def create_tables(conn):
         modifie_le TEXT
     )""")
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS interactions_chatbot (
+        id                   TEXT PRIMARY KEY,
+        utilisateur_id       TEXT REFERENCES utilisateurs(id),
+        requete_utilisateur  TEXT NOT NULL,
+        requete_rag_utilisee TEXT,
+        dimension_detectee   TEXT,
+        chunks_recuperes     TEXT,
+        reponse_generee      TEXT,
+        sources_citees       TEXT,
+        horodatage           TEXT NOT NULL
+    )""")
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_interactions_horodatage "
+        "ON interactions_chatbot (horodatage)"
+    )
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS feedback_reponses (
+        id             TEXT PRIMARY KEY,
+        interaction_id TEXT REFERENCES interactions_chatbot(id),
+        note           INTEGER NOT NULL CHECK(note IN (1, -1)),
+        commentaire    TEXT,
+        utilisateur_id TEXT REFERENCES utilisateurs(id),
+        horodatage     TEXT NOT NULL
+    )""")
+
+    # ── Index de performance ──────────────────────────────────────────────
+    # url_original UNIQUE : accélère la déduplication du scraping (url_existe)
+    # et permet la dédup native via INSERT OR IGNORE.
+    cursor.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_articles_url "
+        "ON articles(url_original)"
+    )
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_articles_source "
+        "ON articles(source_id)"
+    )
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_chunks_article "
+        "ON chunks(article_id)"
+    )
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_chunks_faiss "
+        "ON chunks(faiss_id)"
+    )
+
     conn.commit()
     print(f"[OK] Toutes les tables créées dans : {DB_PATH}")
 
@@ -283,6 +330,20 @@ if __name__ == "__main__":
         print("[OK] Colonne qualite_contenu ajoutée.")
     except Exception:
         print("[INFO] Colonne qualite_contenu déjà présente.")
+    # Migration — colonnes de classification (dimension / zone / cible)
+    for col in ("dimension", "zone", "cible"):
+        try:
+            conn.execute(f"ALTER TABLE articles ADD COLUMN {col} TEXT")
+            print(f"[OK] Colonne articles.{col} ajoutée.")
+        except Exception:
+            print(f"[INFO] Colonne articles.{col} déjà présente.")
+    try:
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_articles_dimension "
+            "ON articles(dimension)"
+        )
+    except Exception as e:
+        print(f"[INFO] {e}")
     try:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS historique_actions_diif (
@@ -324,6 +385,41 @@ if __name__ == "__main__":
             )
         """)
         print("[OK] Table parametres créée.")
+    except Exception as e:
+        print(f"[INFO] {e}")
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS interactions_chatbot (
+                id                   TEXT PRIMARY KEY,
+                utilisateur_id       TEXT,
+                requete_utilisateur  TEXT NOT NULL,
+                requete_rag_utilisee TEXT,
+                dimension_detectee   TEXT,
+                chunks_recuperes     TEXT,
+                reponse_generee      TEXT,
+                sources_citees       TEXT,
+                horodatage           TEXT NOT NULL
+            )
+        """)
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_interactions_horodatage "
+            "ON interactions_chatbot (horodatage)"
+        )
+        print("[OK] Table interactions_chatbot créée.")
+    except Exception as e:
+        print(f"[INFO] {e}")
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS feedback_reponses (
+                id             TEXT PRIMARY KEY,
+                interaction_id TEXT,
+                note           INTEGER NOT NULL,
+                commentaire    TEXT,
+                utilisateur_id TEXT,
+                horodatage     TEXT NOT NULL
+            )
+        """)
+        print("[OK] Table feedback_reponses créée.")
     except Exception as e:
         print(f"[INFO] {e}")
     conn.close()

@@ -14,7 +14,10 @@ from core.database import get_db, new_id, now_iso
 
 log = logging.getLogger(__name__)
 
-CHUNK_SIZE    = 1600
+# Plafond STRICT par chunk. 1500 car ≈ 330-440 tokens selon la densité
+# (mesuré : 3,42-5,33 car/token sur le corpus) → reste sous la fenêtre de
+# 512 tokens du modèle e5, avec marge. split_text() GARANTIT ce plafond.
+CHUNK_SIZE    = 1500
 CHUNK_OVERLAP = 200
 MIN_CHUNK_LEN = 100
 BATCH_SIZE    = 100   # articles traités par lot
@@ -75,53 +78,82 @@ def est_dans_perimetre(titre: str, contenu: str) -> bool:
 # ────────────────────────────────────────────────────────────────────────────
 
 
+# Séparateurs naturels par priorité décroissante ("" = découpe brute en dernier).
+_SEPARATEURS = ["\n\n", "\n", ". ", "? ", "! ", "; ", ", ", " ", ""]
+
+
+def _decouper_recursif(texte: str, separateurs: list) -> list:
+    """
+    Découpe récursivement en fragments dont chacun est GARANTI ≤ CHUNK_SIZE.
+    Le séparateur est réattaché au fragment précédent (fidélité du texte).
+    """
+    texte = texte.strip()
+    if len(texte) <= CHUNK_SIZE:
+        return [texte] if texte else []
+
+    # Premier séparateur présent dans le texte (ou "" = découpe brute).
+    sep = ""
+    for s in separateurs:
+        if s == "" or s in texte:
+            sep = s
+            break
+
+    if sep == "":
+        # Dernier recours : découpe brute par caractères (cap strict).
+        return [texte[i:i + CHUNK_SIZE]
+                for i in range(0, len(texte), CHUNK_SIZE)]
+
+    parts = texte.split(sep)
+    parts = [p + sep for p in parts[:-1]] + [parts[-1]]   # réattache le séparateur
+    reste = separateurs[separateurs.index(sep) + 1:]
+
+    fragments = []
+    for p in parts:
+        if not p:
+            continue
+        if len(p) <= CHUNK_SIZE:
+            fragments.append(p)
+        else:
+            fragments.extend(_decouper_recursif(p, reste))
+    return fragments
+
+
 def split_text(texte: str) -> list:
     """
-    Découpe un texte en chunks avec chevauchement.
-    Respecte les séparateurs naturels dans l'ordre de priorité.
+    Découpe un texte en chunks avec chevauchement, en GARANTISSANT que chaque
+    chunk reste ≤ CHUNK_SIZE caractères (donc sous la fenêtre 512 tokens d'e5).
+
+    1) découpe récursive par séparateurs naturels → fragments ≤ CHUNK_SIZE ;
+    2) fusion gloutonne des fragments jusqu'à CHUNK_SIZE, avec chevauchement ;
+    3) filet de sécurité : tout dépassement résiduel est recoupé.
     """
-    if not texte or len(texte) < MIN_CHUNK_LEN:
+    if not texte or len(texte.strip()) < MIN_CHUNK_LEN:
         return []
 
-    separateurs = ["\n\n", "\n", ". ", "? ", "! ", "; ", ", ", " "]
-    chunks_result = []
+    fragments = _decouper_recursif(texte, _SEPARATEURS)
 
-    def _split(text, seps):
-        if not text or len(text.strip()) < MIN_CHUNK_LEN:
-            return
-        if len(text) <= CHUNK_SIZE:
-            chunks_result.append(text.strip())
-            return
-        if not seps:
-            # Dernier recours : découpe brute
-            for i in range(0, len(text), CHUNK_SIZE - CHUNK_OVERLAP):
-                partie = text[i:i + CHUNK_SIZE].strip()
-                if len(partie) >= MIN_CHUNK_LEN:
-                    chunks_result.append(partie)
-            return
+    chunks: list = []
+    courant = ""
+    for frag in fragments:
+        if not courant:
+            courant = frag
+        elif len(courant) + len(frag) <= CHUNK_SIZE:
+            courant += frag
+        else:
+            if len(courant.strip()) >= MIN_CHUNK_LEN:
+                chunks.append(courant.strip())
+            # chevauchement : on repart de la fin du chunk précédent
+            overlap = courant[-CHUNK_OVERLAP:] if len(courant) > CHUNK_OVERLAP else courant
+            courant = overlap + frag
+            # filet de sécurité : garantir le plafond même après overlap
+            while len(courant) > CHUNK_SIZE:
+                chunks.append(courant[:CHUNK_SIZE].strip())
+                courant = courant[CHUNK_SIZE - CHUNK_OVERLAP:]
 
-        sep = seps[0]
-        parties = text.split(sep)
-        buffer = ""
+    if courant and len(courant.strip()) >= MIN_CHUNK_LEN:
+        chunks.append(courant.strip())
 
-        for partie in parties:
-            candidat = (buffer + sep + partie) if buffer else partie
-            if len(candidat) <= CHUNK_SIZE:
-                buffer = candidat
-            else:
-                if len(buffer.strip()) >= MIN_CHUNK_LEN:
-                    chunks_result.append(buffer.strip())
-                    overlap = buffer[-CHUNK_OVERLAP:] if len(buffer) > CHUNK_OVERLAP else buffer
-                    buffer = overlap + sep + partie
-                else:
-                    _split(partie, seps[1:])
-                    buffer = partie
-
-        if buffer and len(buffer.strip()) >= MIN_CHUNK_LEN:
-            chunks_result.append(buffer.strip())
-
-    _split(texte, separateurs)
-    return chunks_result
+    return [c for c in chunks if len(c.strip()) >= MIN_CHUNK_LEN]
 
 
 def sauvegarder_chunks(chunks: list) -> int:

@@ -18,6 +18,15 @@ OPENAI_MODEL_FAST     = os.getenv("OPENAI_MODEL_FAST", "gpt-4o-mini")
 
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
 
+# ── Reranker cross-encoder (étape 2b) ────────────────────────────────────────
+# Modèle multilingue FR/EN léger (~135 MB), entraîné sur MS MARCO multilingue.
+# Mettre USE_RERANKER=false dans .env pour désactiver (ex: machine sans RAM).
+RERANKER_MODEL = os.getenv(
+    "RERANKER_MODEL",
+    "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
+)
+USE_RERANKER = os.getenv("USE_RERANKER", "true").lower() == "true"
+
 SMTP_HOST     = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT     = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER     = os.getenv("SMTP_USER", "")

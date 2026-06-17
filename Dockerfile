@@ -13,22 +13,23 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y curl \
     && rm -rf /var/lib/apt/lists/*
 
-# torch Linux CPU — wheel local (évite 700 MB de téléchargement)
-# Les petites dépendances de torch (jinja2, filelock…) viennent de PyPI
+# torch Linux CPU — wheel local (evite 700 MB de telechargement)
 COPY local_packages/wheels/torch*.whl /tmp/
 RUN pip install --no-cache-dir /tmp/torch*.whl \
     && rm /tmp/torch*.whl
 
-# sentence-transformers et le reste des dépendances
-# torch est déjà installé — pip ne le retélécharge pas
+# sentence-transformers et le reste des dependances
 COPY requirements.txt .
 RUN grep -vE "^torch" requirements.txt > /tmp/req_light.txt \
-    && pip install --no-cache-dir -r /tmp/req_light.txt \
+    && pip install --no-cache-dir --timeout 120 --retries 5 -r /tmp/req_light.txt \
     && rm /tmp/req_light.txt
 
-# Modèle HuggingFace — copié depuis le cache local (pas de réseau)
+# Modeles HuggingFace — copies depuis le cache local (pas de reseau au build)
 COPY model_cache/models--intfloat--multilingual-e5-base \
      /app/models/hub/models--intfloat--multilingual-e5-base
+
+COPY model_cache/models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1 \
+     /app/models/hub/models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1
 
 # Code source (en dernier pour ne pas invalider les layers lourds)
 COPY . .

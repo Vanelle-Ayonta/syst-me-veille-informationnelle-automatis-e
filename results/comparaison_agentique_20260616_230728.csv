@@ -1,0 +1,10 @@
+﻿Groupe,Métrique,Clé,Avant améliorations,Après Étapes 2a+2b,Δ absolu,Δ %
+Comportement agentique (sans LLM),Outil recherche appelé,search_corpus_appele,0.2857,1.0000,+0.7143,+250.0%
+Comportement agentique (sans LLM),Reformulation détectée,reformulation,0.1429,0.4000,+0.2571,+180.0%
+Comportement agentique (sans LLM),Nb recherches (moy.),nb_recherches,0.4286,1.4000,+0.9714,+226.7%
+Comportement agentique (sans LLM),Sources non vides,sources_non_vides,0.2857,1.0000,+0.7143,+250.0%
+Qualité de génération (juge LLM),Fidélité (faithfulness),faithfulness,0.4671,0.6067,+0.1395,+29.9%
+Qualité de génération (juge LLM),Pertinence réponse,answer_relevancy,0.6571,0.6900,+0.0329,+5.0%
+Qualité de génération (juge LLM),Pertinence contexte,context_relevance,0.2000,0.6033,+0.4033,+201.7%
+Qualité de génération (juge LLM),Qualité globale,qualite_globale,0.5043,0.6180,+0.1137,+22.5%
+Qualité de génération (juge LLM),Similarité référence,answer_similarity,,0.5233,,

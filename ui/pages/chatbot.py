@@ -4,10 +4,32 @@ Chatbot conversationnel avec historique de session,
 sources citées et suggestions actionnables.
 """
 import streamlit as st
-import sys, os
+import sys, os, html
 sys.path.insert(0, os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
-from config import DIMENSIONS_IF, CIBLES_IF, ZONES_CEMAC
+# (filtres dimension/zone/cible retirés du chatbot — conservés côté Veille)
+
+# Marqueurs de rôle injectés dans chaque message — pilotent le style des bulles
+# (CSS :has(...) dans app.py), indépendamment des data-testid internes Streamlit.
+_MARQUEUR_USER = '<span class="svia-role svia-role-user"></span>'
+_MARQUEUR_BOT  = '<span class="svia-role svia-role-bot svia-marker-hide"></span>'
+
+
+def _msg_user(contenu: str):
+    """Affiche un message utilisateur (bulle bleue, à droite)."""
+    with st.chat_message("user", avatar="👤"):
+        st.markdown(
+            f'{_MARQUEUR_USER}<div style="font-weight:500;">'
+            f'{html.escape(contenu)}</div>',
+            unsafe_allow_html=True,
+        )
+
+
+def _msg_bot(contenu: str):
+    """Affiche un message SVIA (bulle crème, à gauche), contenu en markdown."""
+    with st.chat_message("assistant", avatar="🏦"):
+        st.markdown(_MARQUEUR_BOT, unsafe_allow_html=True)
+        st.markdown(contenu)
 
 
 def render_chatbot(user):
@@ -24,6 +46,10 @@ def render_chatbot(user):
         st.session_state["chat_sources"] = []
     if "chat_suggestions" not in st.session_state:
         st.session_state["chat_suggestions"] = []
+    if "chat_last_interaction_id" not in st.session_state:
+        st.session_state["chat_last_interaction_id"] = None
+    if "chat_feedback" not in st.session_state:
+        st.session_state["chat_feedback"] = {}
 
     # Vérifier que l'index RAG est disponible
     try:
@@ -72,29 +98,14 @@ def render_chatbot(user):
 </style>
 """, unsafe_allow_html=True)
 
-    # Filtres optionnels dans la sidebar
+    # Paramètres du chatbot dans la sidebar
     with st.sidebar:
         st.markdown("---")
         st.markdown(
             '<div style="font-size:11px;color:rgba(200,169,81,0.8);'
             'text-transform:uppercase;letter-spacing:0.06em;">'
-            'Filtres chatbot</div>',
+            'Chatbot</div>',
             unsafe_allow_html=True
-        )
-        filtre_dim = st.selectbox(
-            "Dimension IF",
-            ["Toutes"] + DIMENSIONS_IF,
-            key="chat_dim"
-        )
-        filtre_zone = st.selectbox(
-            "Zone",
-            ["Toutes"] + ZONES_CEMAC,
-            key="chat_zone"
-        )
-        filtre_cible = st.selectbox(
-            "Cible prioritaire",
-            ["Toutes"] + CIBLES_IF,
-            key="chat_cible"
         )
         top_k = st.slider(
             "Nombre de sources",
@@ -106,6 +117,8 @@ def render_chatbot(user):
             st.session_state["chat_historique"]  = []
             st.session_state["chat_sources"]     = []
             st.session_state["chat_suggestions"] = []
+            st.session_state["chat_last_interaction_id"] = None
+            st.session_state["chat_feedback"]    = {}
             st.rerun()
 
     # Afficher l'historique de conversation
@@ -113,21 +126,37 @@ def render_chatbot(user):
 
     for msg in historique:
         if msg["role"] == "user":
-            with st.chat_message(
-                "user",
-                avatar="👤"
-            ):
-                st.markdown(
-                    f'<div style="font-weight:500;">'
-                    f'{msg["content"]}</div>',
-                    unsafe_allow_html=True
-                )
+            _msg_user(msg["content"])
         else:
-            with st.chat_message(
-                "assistant",
-                avatar="🏦"
-            ):
-                st.markdown(msg["content"])
+            _msg_bot(msg["content"])
+
+    # Feedback sur la dernière réponse (👍/👎) — écriture immédiate au clic.
+    # Placé dans la zone persistante (après rerun) pour rester cliquable.
+    last_iid = st.session_state.get("chat_last_interaction_id")
+    if (last_iid and historique and historique[-1]["role"] == "assistant"):
+        note_donnee = st.session_state["chat_feedback"].get(last_iid)
+        if note_donnee == 1:
+            st.caption("✅ Merci pour votre retour positif.")
+        elif note_donnee == -1:
+            st.caption("✅ Merci, votre retour a été pris en compte.")
+        else:
+            st.caption("Cette réponse vous a-t-elle été utile ?")
+            cfb1, cfb2, _ = st.columns([1, 1, 8])
+            from core.database import enregistrer_feedback
+            with cfb1:
+                if st.button("👍", key=f"fb_ok_{last_iid}",
+                             help="Réponse utile"):
+                    enregistrer_feedback(last_iid, 1,
+                                         utilisateur_id=user.get("id"))
+                    st.session_state["chat_feedback"][last_iid] = 1
+                    st.rerun()
+            with cfb2:
+                if st.button("👎", key=f"fb_ko_{last_iid}",
+                             help="Réponse à améliorer"):
+                    enregistrer_feedback(last_iid, -1,
+                                         utilisateur_id=user.get("id"))
+                    st.session_state["chat_feedback"][last_iid] = -1
+                    st.rerun()
 
     # Afficher les sources du dernier échange
     if st.session_state["chat_sources"]:
@@ -174,9 +203,9 @@ def render_chatbot(user):
         "quelles sont vos sources",
         "liste tes sources",
     ]:
-        with st.chat_message("user"):
-            st.write(question)
-        with st.chat_message("assistant"):
+        _msg_user(question)
+        with st.chat_message("assistant", avatar="🏦"):
+            st.markdown(_MARQUEUR_BOT, unsafe_allow_html=True)
             try:
                 from core.database import get_db
                 with get_db() as conn:
@@ -241,47 +270,57 @@ def render_chatbot(user):
 
     elif question:
         # Afficher la question immédiatement
-        with st.chat_message("user"):
-            st.write(question)
-
-        # Préparer les filtres
-        dim   = None if filtre_dim   == "Toutes" else filtre_dim
-        zone  = None if filtre_zone  == "Toutes" else filtre_zone
-        cible = None if filtre_cible == "Toutes" else filtre_cible
+        _msg_user(question)
 
         # Lancer l'orchestrateur
         with st.chat_message("assistant", avatar="🏦"):
+            st.markdown(_MARQUEUR_BOT, unsafe_allow_html=True)
             sources     = []
-            suggestions = []
             reponse     = ""
+            result      = {}
+
+            # Indicateur animé « SVIA rédige… » — visible dès maintenant et
+            # pendant toute l'attente (retrieval + 1er token). Animation CSS
+            # pure : tourne côté navigateur même quand Python attend.
+            placeholder = st.empty()
+            _INDICATEUR = (
+                '<div class="svia-typing">'
+                '<span class="svia-dot"></span>'
+                '<span class="svia-dot"></span>'
+                '<span class="svia-dot"></span>'
+                ' <em>SVIA rédige…</em></div>'
+            )
+            placeholder.markdown(_INDICATEUR, unsafe_allow_html=True)
 
             try:
                 from agents.svia_agent import orchestrer
 
-                # Phase 1 — tool calls + métadonnées (spinner visible)
-                with st.spinner("🔍 Recherche en cours..."):
-                    result = orchestrer(
-                        question=question,
-                        historique=historique,
-                        dimension=dim,
-                        zone=zone,
-                        cible=cible,
-                        top_k=top_k,
-                        stream=True,
-                    )
-                    sources     = result.get("sources", [])
-                    suggestions = result.get("suggestions", [])
-
-                # Phase 2 — affichage du texte
+                result = orchestrer(
+                    question=question,
+                    historique=historique,
+                    top_k=top_k,
+                    stream=True,
+                    utilisateur_id=user.get("id"),
+                )
+                sources     = result.get("sources", [])
                 reponse_data = result.get("reponse", "")
-                placeholder  = st.empty()
 
                 if hasattr(reponse_data, "__iter__") and not isinstance(reponse_data, str):
-                    # Streaming token par token
+                    # Streaming token par token avec curseur clignotant.
+                    # On échappe < et > pour neutraliser tout HTML pendant le
+                    # streaming (le rendu final repasse en markdown sûr).
+                    # Le 1er token remplace l'indicateur (overwrite du placeholder)
                     reponse_acc = ""
                     for token in reponse_data:
                         reponse_acc += token
-                        placeholder.markdown(reponse_acc + " ▌")
+                        affichage = (
+                            reponse_acc.replace("<", "&lt;").replace(">", "&gt;")
+                        )
+                        placeholder.markdown(
+                            affichage + '<span class="svia-cursor"></span>',
+                            unsafe_allow_html=True,
+                        )
+                    # Rendu final propre (markdown complet, sans curseur)
                     placeholder.markdown(reponse_acc)
                     reponse = reponse_acc
                 else:
@@ -291,7 +330,7 @@ def render_chatbot(user):
 
             except Exception as e:
                 reponse = f"Erreur : {e}"
-                st.markdown(reponse)
+                placeholder.markdown(reponse)
 
             st.markdown(
                 '<div style="font-size:10px;color:#C8A951;'
@@ -318,16 +357,6 @@ def render_chatbot(user):
             except Exception:
                 pass
 
-            col_fb1, col_fb2, _ = st.columns([1, 1, 8])
-            with col_fb1:
-                if st.button("👍", key=f"fb_ok_{len(historique)}",
-                             help="Reponse utile"):
-                    pass
-            with col_fb2:
-                if st.button("👎", key=f"fb_ko_{len(historique)}",
-                             help="Reponse a ameliorer"):
-                    pass
-
         # Mettre à jour l'historique
         st.session_state["chat_historique"].append(
             {"role": "user",      "content": question}
@@ -336,6 +365,9 @@ def render_chatbot(user):
             {"role": "assistant", "content": reponse}
         )
         st.session_state["chat_sources"]     = sources
-        st.session_state["chat_suggestions"] = suggestions
+        # Suggestions différées : générées en parallèle, prêtes à la fin du flux.
+        st.session_state["chat_suggestions"] = result.get("suggestions", [])
+        # Conserve l'id d'interaction pour le feedback (boutons 👍/👎 persistants)
+        st.session_state["chat_last_interaction_id"] = result.get("interaction_id")
 
         st.rerun()

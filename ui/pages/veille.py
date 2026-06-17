@@ -11,11 +11,18 @@ from core.database import get_db as _get_db_veille
 
 @st.cache_data(ttl=120)
 def _count_articles_veille(langue, qualite, champ_date,
-                            date_debut_str, date_fin_str, mot_cle):
+                            date_debut_str, date_fin_str, mot_cle,
+                            dimension="Toutes", cible="Toutes", zone="Toutes"):
     """COUNT mis en cache 2 min pour éviter un hit DB à chaque interaction."""
     where_parts, params = [], []
     if langue != "Toutes":
         where_parts.append("a.langue = ?"); params.append(langue)
+    if dimension != "Toutes":
+        where_parts.append("a.dimension = ?"); params.append(dimension)
+    if cible != "Toutes":
+        where_parts.append("a.cible = ?"); params.append(cible)
+    if zone != "Toutes":
+        where_parts.append("a.zone = ?"); params.append(zone)
     if qualite != "Toutes":
         where_parts.append("a.qualite_contenu = ?"); params.append(qualite)
     if date_debut_str:
@@ -109,6 +116,15 @@ def render_veille(user):
         if langue != "Toutes":
             where_parts.append("a.langue = ?")
             params.append(langue)
+        if dim != "Toutes":
+            where_parts.append("a.dimension = ?")
+            params.append(dim)
+        if cible != "Toutes":
+            where_parts.append("a.cible = ?")
+            params.append(cible)
+        if zone != "Toutes":
+            where_parts.append("a.zone = ?")
+            params.append(zone)
         if qualite_filtre != "Toutes":
             where_parts.append("a.qualite_contenu = ?")
             params.append(qualite_filtre)
@@ -125,8 +141,8 @@ def render_veille(user):
         where_sql = ("WHERE " + " AND ".join(where_parts)) if where_parts else ""
 
         # Réinitialiser la page si les filtres changent
-        filtre_sig = str((langue, qualite_filtre, filtre_date_sur,
-                          date_debut, date_fin, mot_cle))
+        filtre_sig = str((langue, dim, cible, zone, qualite_filtre,
+                          filtre_date_sur, date_debut, date_fin, mot_cle))
         if st.session_state.get("veille_filtre_sig") != filtre_sig:
             st.session_state["veille_filtre_sig"] = filtre_sig
             st.session_state["veille_page"] = 1
@@ -138,6 +154,7 @@ def render_veille(user):
             str(date_debut) if date_debut else None,
             str(date_fin)   if date_fin   else None,
             mot_cle,
+            dim, cible, zone,
         )
 
         with get_db() as conn:

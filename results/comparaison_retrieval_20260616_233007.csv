@@ -1,0 +1,26 @@
+﻿Groupe,Métrique,Clé,FAISS seul,FAISS + Cross-encoder,Δ absolu,Δ %
+Niveau CHUNK @k=5,Precision@5 (chunk),precision@5,0.4333,0.1800,-0.2533,-58.5%
+Niveau CHUNK @k=5,Recall@5 (chunk),recall@5,0.5861,0.2472,-0.3389,-57.8%
+Niveau CHUNK @k=5,F1@5 (chunk),f1@5,0.4943,0.2061,-0.2882,-58.3%
+Niveau CHUNK @k=5,NDCG@5 (chunk),ndcg@5,0.6423,0.3383,-0.3040,-47.3%
+Niveau CHUNK @k=8,Precision@8 (chunk),precision@8,0.3083,0.1167,-0.1916,-62.1%
+Niveau CHUNK @k=8,Recall@8 (chunk),recall@8,0.6694,0.2583,-0.4111,-61.4%
+Niveau CHUNK @k=8,F1@8 (chunk),f1@8,0.4191,0.1593,-0.2598,-62.0%
+Niveau CHUNK @k=8,NDCG@8 (chunk),ndcg@8,0.6849,0.3438,-0.3411,-49.8%
+Niveau CHUNK @k=10,Precision@10 (chunk),precision@10,0.2533,0.0933,-0.1600,-63.2%
+Niveau CHUNK @k=10,Recall@10 (chunk),recall@10,0.6861,0.2583,-0.4278,-62.4%
+Niveau CHUNK @k=10,F1@10 (chunk),f1@10,0.3677,0.1361,-0.2316,-63.0%
+Niveau CHUNK @k=10,NDCG@10 (chunk),ndcg@10,0.6926,0.3438,-0.3488,-50.4%
+Niveau ARTICLE @k=5,Hit Rate@5 (article),article_hit@5,0.9333,0.9000,-0.0333,-3.6%
+Niveau ARTICLE @k=5,Precision@5 (article),article_precision@5,0.4600,0.1800,-0.2800,-60.9%
+Niveau ARTICLE @k=5,Recall@5 (article),article_recall@5,2.3000,0.9000,-1.4000,-60.9%
+Niveau ARTICLE @k=8,Hit Rate@8 (article),article_hit@8,0.9667,0.9333,-0.0334,-3.5%
+Niveau ARTICLE @k=8,Precision@8 (article),article_precision@8,0.3333,0.1167,-0.2166,-65.0%
+Niveau ARTICLE @k=8,Recall@8 (article),article_recall@8,2.6667,0.9333,-1.7334,-65.0%
+Niveau ARTICLE @k=10,Hit Rate@10 (article),article_hit@10,0.9667,0.9333,-0.0334,-3.5%
+Niveau ARTICLE @k=10,Precision@10 (article),article_precision@10,0.2733,0.0933,-0.1800,-65.9%
+Niveau ARTICLE @k=10,Recall@10 (article),article_recall@10,2.7333,0.9333,-1.8000,-65.9%
+Synthèse,MRR (chunk),mrr,0.9056,0.7928,-0.1128,-12.5%
+Synthèse,MRR (article),mrr_article,0.9056,0.7928,-0.1128,-12.5%
+Synthèse,Hit Rate@10 (chunk),hit_rate@10,0.9667,0.9333,-0.0334,-3.5%
+Synthèse,"Hit Rate@10 (article, global)",article_hit_rate@10,0.9667,0.9333,-0.0334,-3.5%

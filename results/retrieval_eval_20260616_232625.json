@@ -1,0 +1,1465 @@
+{
+  "type": "retrieval",
+  "date": "2026-06-16T23:26:25.542333",
+  "pipeline": "FAISS + cross-encoder",
+  "use_reranker": true,
+  "k_values": [
+    5,
+    8,
+    10
+  ],
+  "n_cas": 30,
+  "moyennes": {
+    "precision@5": 0.18,
+    "recall@5": 0.2472,
+    "f1@5": 0.2061,
+    "ndcg@5": 0.3383,
+    "article_hit@5": 0.9,
+    "article_precision@5": 0.18,
+    "article_recall@5": 0.9,
+    "precision@8": 0.1167,
+    "recall@8": 0.2583,
+    "f1@8": 0.1593,
+    "ndcg@8": 0.3438,
+    "article_hit@8": 0.9333,
+    "article_precision@8": 0.1167,
+    "article_recall@8": 0.9333,
+    "precision@10": 0.0933,
+    "recall@10": 0.2583,
+    "f1@10": 0.1361,
+    "ndcg@10": 0.3438,
+    "article_hit@10": 0.9333,
+    "article_precision@10": 0.0933,
+    "article_recall@10": 0.9333,
+    "mrr": 0.7928,
+    "mrr_article": 0.7928,
+    "hit_rate@10": 0.9333,
+    "article_hit_rate@10": 0.9333
+  },
+  "par_dimension": {
+    "Accès": {
+      "precision@5": 0.1714,
+      "recall@5": 0.2381,
+      "f1@5": 0.1984,
+      "ndcg@5": 0.3572,
+      "article_hit@5": 0.8571,
+      "article_precision@5": 0.1714,
+      "article_recall@5": 0.8571,
+      "precision@8": 0.125,
+      "recall@8": 0.2857,
+      "f1@8": 0.1732,
+      "ndcg@8": 0.3811,
+      "article_hit@8": 1.0,
+      "article_precision@8": 0.125,
+      "article_recall@8": 1.0,
+      "precision@10": 0.1,
+      "recall@10": 0.2857,
+      "f1@10": 0.1476,
+      "ndcg@10": 0.3811,
+      "article_hit@10": 1.0,
+      "article_precision@10": 0.1,
+      "article_recall@10": 1.0,
+      "mrr": 0.881,
+      "mrr_article": 0.881,
+      "hit_rate@10": 1.0,
+      "article_hit_rate@10": 1.0
+    },
+    "Qualité": {
+      "precision@5": 0.15,
+      "recall@5": 0.1875,
+      "f1@5": 0.1667,
+      "ndcg@5": 0.2329,
+      "article_hit@5": 0.75,
+      "article_precision@5": 0.15,
+      "article_recall@5": 0.75,
+      "precision@8": 0.0938,
+      "recall@8": 0.1875,
+      "f1@8": 0.125,
+      "ndcg@8": 0.2329,
+      "article_hit@8": 0.75,
+      "article_precision@8": 0.0938,
+      "article_recall@8": 0.75,
+      "precision@10": 0.075,
+      "recall@10": 0.1875,
+      "f1@10": 0.1072,
+      "ndcg@10": 0.2329,
+      "article_hit@10": 0.75,
+      "article_precision@10": 0.075,
+      "article_recall@10": 0.75,
+      "mrr": 0.55,
+      "mrr_article": 0.55,
+      "hit_rate@10": 0.75,
+      "article_hit_rate@10": 0.75
+    },
+    "Éducation financière": {
+      "precision@5": 0.2,
+      "recall@5": 0.3333,
+      "f1@5": 0.2434,
+      "ndcg@5": 0.4276,
+      "article_hit@5": 1.0,
+      "article_precision@5": 0.2,
+      "article_recall@5": 1.0,
+      "precision@8": 0.125,
+      "recall@8": 0.3333,
+      "f1@8": 0.1778,
+      "ndcg@8": 0.4276,
+      "article_hit@8": 1.0,
+      "article_precision@8": 0.125,
+      "article_recall@8": 1.0,
+      "precision@10": 0.1,
+      "recall@10": 0.3333,
+      "f1@10": 0.1508,
+      "ndcg@10": 0.4276,
+      "article_hit@10": 1.0,
+      "article_precision@10": 0.1,
+      "article_recall@10": 1.0,
+      "mrr": 0.875,
+      "mrr_article": 0.875,
+      "hit_rate@10": 1.0,
+      "article_hit_rate@10": 1.0
+    },
+    "Protection des consommateurs": {
+      "precision@5": 0.15,
+      "recall@5": 0.1875,
+      "f1@5": 0.1667,
+      "ndcg@5": 0.2568,
+      "article_hit@5": 0.75,
+      "article_precision@5": 0.15,
+      "article_recall@5": 0.75,
+      "precision@8": 0.0938,
+      "recall@8": 0.1875,
+      "f1@8": 0.125,
+      "ndcg@8": 0.2568,
+      "article_hit@8": 0.75,
+      "article_precision@8": 0.0938,
+      "article_recall@8": 0.75,
+      "precision@10": 0.075,
+      "recall@10": 0.1875,
+      "f1@10": 0.1072,
+      "ndcg@10": 0.2568,
+      "article_hit@10": 0.75,
+      "article_precision@10": 0.075,
+      "article_recall@10": 0.75,
+      "mrr": 0.625,
+      "mrr_article": 0.625,
+      "hit_rate@10": 0.75,
+      "article_hit_rate@10": 0.75
+    },
+    "Utilisation": {
+      "precision@5": 0.2,
+      "recall@5": 0.25,
+      "f1@5": 0.2222,
+      "ndcg@5": 0.3904,
+      "article_hit@5": 1.0,
+      "article_precision@5": 0.2,
+      "article_recall@5": 1.0,
+      "precision@8": 0.125,
+      "recall@8": 0.25,
+      "f1@8": 0.1667,
+      "ndcg@8": 0.3904,
+      "article_hit@8": 1.0,
+      "article_precision@8": 0.125,
+      "article_recall@8": 1.0,
+      "precision@10": 0.1,
+      "recall@10": 0.25,
+      "f1@10": 0.1429,
+      "ndcg@10": 0.3904,
+      "article_hit@10": 1.0,
+      "article_precision@10": 0.1,
+      "article_recall@10": 1.0,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "hit_rate@10": 1.0,
+      "article_hit_rate@10": 1.0
+    },
+    "Innovation financière": {
+      "precision@5": 0.2,
+      "recall@5": 0.25,
+      "f1@5": 0.2222,
+      "ndcg@5": 0.2603,
+      "article_hit@5": 1.0,
+      "article_precision@5": 0.2,
+      "article_recall@5": 1.0,
+      "precision@8": 0.125,
+      "recall@8": 0.25,
+      "f1@8": 0.1667,
+      "ndcg@8": 0.2603,
+      "article_hit@8": 1.0,
+      "article_precision@8": 0.125,
+      "article_recall@8": 1.0,
+      "precision@10": 0.1,
+      "recall@10": 0.25,
+      "f1@10": 0.1429,
+      "ndcg@10": 0.2603,
+      "article_hit@10": 1.0,
+      "article_precision@10": 0.1,
+      "article_recall@10": 1.0,
+      "mrr": 0.5555,
+      "mrr_article": 0.5555,
+      "hit_rate@10": 1.0,
+      "article_hit_rate@10": 1.0
+    }
+  },
+  "cas": [
+    {
+      "id": "case_001",
+      "question": "According to the text, what are the three key success drivers that enabled 80% o",
+      "dimension": "Accès",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_002",
+      "question": "Selon le texte, quels sont les trois éléments clés qui constituent la constructi",
+      "dimension": "Accès",
+      "langue": "fr",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_003",
+      "question": "What quality criteria or operational characteristics distinguish Tier 1 institut",
+      "dimension": "Qualité",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 7,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_004",
+      "question": "Selon le ministre Patrick Muyaya, quel rôle l'éducation citoyenne et la responsa",
+      "dimension": "Éducation financière",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_005",
+      "question": "According to the text, how do international standards such as ISO and NIST contr",
+      "dimension": "Protection des consommateurs",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_006",
+      "question": "What are the four key goals of bundled savings products for women that were iden",
+      "dimension": "Utilisation",
+      "langue": "en",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_007",
+      "question": "How did the 2015 update to BCEAO's e-money regulation differ from the 2006 regul",
+      "dimension": "Innovation financière",
+      "langue": "en",
+      "question_type": "comparative",
+      "n_relevant": 4,
+      "n_retrieved": 8,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.3333,
+      "mrr_article": 0.3333,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_008",
+      "question": "What specific consumer protection mechanisms should financial service providers ",
+      "dimension": "Protection des consommateurs",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": false,
+      "hit_art_at_kmax": false,
+      "mrr": 0.0,
+      "mrr_article": 0.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        },
+        "k8": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        },
+        "k10": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        }
+      }
+    },
+    {
+      "id": "case_009",
+      "question": "Quels sont les quatre modules structurant la session d'introduction en e-learnin",
+      "dimension": "Accès",
+      "langue": "fr",
+      "question_type": "factuelle",
+      "n_relevant": 3,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.3333,
+          "f1": 0.25,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.3333,
+          "f1": 0.1818,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.3333,
+          "f1": 0.1538,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_010",
+      "question": "Quels sont les différents modes de paiement disponibles pour les contribuables d",
+      "dimension": "Utilisation",
+      "langue": "fr",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_011",
+      "question": "Comment la DGI articule-t-elle l'accès aux services de paiement en ligne avec le",
+      "dimension": "Utilisation",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_012",
+      "question": "Qu'est-ce que les Centres de Fiscalité Locale et des Particuliers (CFLP) et quel",
+      "dimension": "Utilisation",
+      "langue": "fr",
+      "question_type": "definition",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_013",
+      "question": "Quels sont les critères d'éligibilité et les données utilisées par l'Agence des ",
+      "dimension": "Protection des consommateurs",
+      "langue": "fr",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.5,
+      "mrr_article": 0.5,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.2463,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.2463,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.2463,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_014",
+      "question": "Quels sont les mécanismes et critères de qualité utilisés pour assurer l'équité ",
+      "dimension": "Qualité",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.2,
+      "mrr_article": 0.2,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.151,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.151,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.151,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_015",
+      "question": "Selon le texte, quel est le besoin de financement estimé pour combler le déficit",
+      "dimension": "Éducation financière",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_016",
+      "question": "According to the text, what specific cost reductions did One Acre Fund achieve w",
+      "dimension": "Utilisation",
+      "langue": "en",
+      "question_type": "comparative",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_017",
+      "question": "Quels sont les quatre axes stratégiques majeurs autour desquels s'articule la St",
+      "dimension": "Éducation financière",
+      "langue": "fr",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_018",
+      "question": "How does Women's World Banking's TechEquity Program approach consumer protection",
+      "dimension": "Protection des consommateurs",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_019",
+      "question": "What specific financial literacy topics were covered in the quizzes organized du",
+      "dimension": "Éducation financière",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 2,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.5,
+          "f1": 0.2857,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.5,
+          "f1": 0.2,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.5,
+          "f1": 0.1667,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_020",
+      "question": "Quels sont les trois principaux piliers de la transformation numérique mise en œ",
+      "dimension": "Éducation financière",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.25,
+      "mrr_article": 0.25,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.1681,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.1681,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.1681,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_021",
+      "question": "What is the relationship between the number of participants in an interoperabili",
+      "dimension": "Qualité",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_022",
+      "question": "What are the two main financial inclusion targets that Nigeria aims to achieve a",
+      "dimension": "Innovation financière",
+      "langue": "en",
+      "question_type": "factuelle",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.3333,
+      "mrr_article": 0.3333,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.1952,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_023",
+      "question": "How does Turkey's approach to digital lending ecosystem differ from traditional ",
+      "dimension": "Innovation financière",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_024",
+      "question": "Quels sont les deux types de saisie sur compte bancaire distingués selon la natu",
+      "dimension": "Accès",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_025",
+      "question": "How does Fenix International leverage its existing ReadyPay solar payment infras",
+      "dimension": "Accès",
+      "langue": "en",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_026",
+      "question": "Selon le texte, comment l'introduction de taxes sur le mobile money affecte-t-el",
+      "dimension": "Utilisation",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.25,
+          "f1": 0.2222,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.25,
+          "f1": 0.1667,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.25,
+          "f1": 0.1429,
+          "ndcg": 0.3904,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_027",
+      "question": "According to the text, what specific role does technology play in enhancing fina",
+      "dimension": "Éducation financière",
+      "langue": "en",
+      "question_type": "factuelle",
+      "n_relevant": 2,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.5,
+          "f1": 0.2857,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.5,
+          "f1": 0.2,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.5,
+          "f1": 0.1667,
+          "ndcg": 0.6131,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_028",
+      "question": "How does the text define the relationship between financial inclusion and the ac",
+      "dimension": "Qualité",
+      "langue": "en",
+      "question_type": "definition",
+      "n_relevant": 4,
+      "n_retrieved": 10,
+      "hit_at_kmax": false,
+      "hit_art_at_kmax": false,
+      "mrr": 0.0,
+      "mrr_article": 0.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        },
+        "k8": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        },
+        "k10": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        }
+      }
+    },
+    {
+      "id": "case_029",
+      "question": "According to the Women's World Banking research on Indonesia's creative industry",
+      "dimension": "Accès",
+      "langue": "en",
+      "question_type": "definition",
+      "n_relevant": 3,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 0.1667,
+      "mrr_article": 0.1667,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "ndcg": 0.0,
+          "article_hit": 0,
+          "article_precision": 0.0,
+          "article_recall": 0.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.3333,
+          "f1": 0.1818,
+          "ndcg": 0.1672,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.3333,
+          "f1": 0.1538,
+          "ndcg": 0.1672,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    },
+    {
+      "id": "case_030",
+      "question": "Selon le texte, comment les points d'accès privatif aux espèces contribuent-ils ",
+      "dimension": "Accès",
+      "langue": "fr",
+      "question_type": "synthese",
+      "n_relevant": 3,
+      "n_retrieved": 10,
+      "hit_at_kmax": true,
+      "hit_art_at_kmax": true,
+      "mrr": 1.0,
+      "mrr_article": 1.0,
+      "metriques_par_k": {
+        "k5": {
+          "precision": 0.2,
+          "recall": 0.3333,
+          "f1": 0.25,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.2,
+          "article_recall": 1.0
+        },
+        "k8": {
+          "precision": 0.125,
+          "recall": 0.3333,
+          "f1": 0.1818,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.125,
+          "article_recall": 1.0
+        },
+        "k10": {
+          "precision": 0.1,
+          "recall": 0.3333,
+          "f1": 0.1538,
+          "ndcg": 0.4693,
+          "article_hit": 1,
+          "article_precision": 0.1,
+          "article_recall": 1.0
+        }
+      }
+    }
+  ]
+}

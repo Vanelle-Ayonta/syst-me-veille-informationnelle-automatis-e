@@ -1,6 +1,7 @@
 import sqlite3
 import os
 import uuid
+import json
 from datetime import datetime
 from contextlib import contextmanager
 import sys
@@ -287,3 +288,171 @@ def get_stats_dashboard() -> dict:
         "par_mois":          [dict(r) for r in par_mois],
         "par_dimension":     [dict(r) for r in par_dimension],
     }
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Interactions chatbot — traçabilité des échanges RAG (évaluation)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def enregistrer_interaction(utilisateur_id,
+                            requete_utilisateur,
+                            requete_rag_utilisee,
+                            dimension_detectee,
+                            chunks_recuperes,
+                            reponse_generee,
+                            sources_citees,
+                            interaction_id=None):
+    """
+    Enregistre une interaction chatbot dans interactions_chatbot.
+
+    chunks_recuperes : liste de dicts {chunk_id, article_id, score, source}
+    sources_citees   : liste de dicts (source, titre, url, date, score)
+
+    Retourne l'id de l'interaction (généré si non fourni).
+    """
+    iid = interaction_id or new_id()
+    with get_db() as conn:
+        conn.execute("""
+            INSERT INTO interactions_chatbot
+                (id, utilisateur_id, requete_utilisateur, requete_rag_utilisee,
+                 dimension_detectee, chunks_recuperes, reponse_generee,
+                 sources_citees, horodatage)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            iid,
+            utilisateur_id,
+            requete_utilisateur,
+            requete_rag_utilisee,
+            dimension_detectee,
+            json.dumps(chunks_recuperes or [], ensure_ascii=False),
+            reponse_generee,
+            json.dumps(sources_citees or [], ensure_ascii=False),
+            now_iso(),
+        ))
+    return iid
+
+
+def get_interactions(limit=200, utilisateur_id=None):
+    """Retourne les dernières interactions chatbot (JSON désérialisé)."""
+    with get_db() as conn:
+        if utilisateur_id:
+            rows = conn.execute("""
+                SELECT i.*, u.nom, u.email FROM interactions_chatbot i
+                LEFT JOIN utilisateurs u ON i.utilisateur_id = u.id
+                WHERE i.utilisateur_id = ?
+                ORDER BY i.horodatage DESC LIMIT ?
+            """, (utilisateur_id, limit)).fetchall()
+        else:
+            rows = conn.execute("""
+                SELECT i.*, u.nom, u.email FROM interactions_chatbot i
+                LEFT JOIN utilisateurs u ON i.utilisateur_id = u.id
+                ORDER BY i.horodatage DESC LIMIT ?
+            """, (limit,)).fetchall()
+    out = []
+    for r in rows:
+        d = dict(r)
+        for champ in ("chunks_recuperes", "sources_citees"):
+            try:
+                d[champ] = json.loads(d.get(champ) or "[]")
+            except Exception:
+                d[champ] = []
+        out.append(d)
+    return out
+
+
+def get_stats_interactions() -> dict:
+    """
+    Statistiques agrégées sur interactions_chatbot pour la page d'évaluation :
+    volume total, distribution par dimension, distribution des scores de chunks.
+    """
+    stats = {
+        "total":            0,
+        "par_dimension":    [],
+        "par_jour":         [],
+        "scores_chunks":    [],
+        "avec_feedback":    0,
+        "feedback_positif": 0,
+        "feedback_negatif": 0,
+    }
+    with get_db() as conn:
+        stats["total"] = conn.execute(
+            "SELECT COUNT(*) FROM interactions_chatbot"
+        ).fetchone()[0]
+
+        if stats["total"] == 0:
+            return stats
+
+        par_dim = conn.execute("""
+            SELECT COALESCE(dimension_detectee, 'Non détectée') AS dimension,
+                   COUNT(*) AS nb
+            FROM interactions_chatbot
+            GROUP BY dimension_detectee
+            ORDER BY nb DESC
+        """).fetchall()
+        stats["par_dimension"] = [dict(r) for r in par_dim]
+
+        par_jour = conn.execute("""
+            SELECT SUBSTR(horodatage, 1, 10) AS jour, COUNT(*) AS nb
+            FROM interactions_chatbot
+            GROUP BY jour ORDER BY jour DESC LIMIT 30
+        """).fetchall()
+        stats["par_jour"] = [dict(r) for r in par_jour]
+
+        # Distribution des scores de chunks (parsés depuis le JSON)
+        rows = conn.execute(
+            "SELECT chunks_recuperes FROM interactions_chatbot"
+        ).fetchall()
+        scores = []
+        for r in rows:
+            try:
+                for c in json.loads(r[0] or "[]"):
+                    s = c.get("score")
+                    if isinstance(s, (int, float)):
+                        scores.append(float(s))
+            except Exception:
+                continue
+        stats["scores_chunks"] = scores
+
+        # Feedback agrégé (table optionnelle)
+        try:
+            fb = conn.execute("""
+                SELECT note, COUNT(*) AS nb
+                FROM feedback_reponses GROUP BY note
+            """).fetchall()
+            for r in fb:
+                if r["note"] == 1:
+                    stats["feedback_positif"] = r["nb"]
+                elif r["note"] == -1:
+                    stats["feedback_negatif"] = r["nb"]
+            stats["avec_feedback"] = (
+                stats["feedback_positif"] + stats["feedback_negatif"]
+            )
+        except Exception:
+            pass
+
+    return stats
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Feedback utilisateur sur les réponses du chatbot
+# ──────────────────────────────────────────────────────────────────────────────
+
+def enregistrer_feedback(interaction_id, note, utilisateur_id=None,
+                         commentaire=None):
+    """
+    Enregistre un feedback (note = 1 ou -1) sur une réponse du chatbot.
+    Retourne l'id du feedback ou None en cas d'échec.
+    """
+    try:
+        fid = new_id()
+        with get_db() as conn:
+            conn.execute("""
+                INSERT INTO feedback_reponses
+                    (id, interaction_id, note, commentaire,
+                     utilisateur_id, horodatage)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (fid, interaction_id, note, commentaire,
+                  utilisateur_id, now_iso()))
+        return fid
+    except Exception:
+        return None

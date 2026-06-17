@@ -1,0 +1,279 @@
+{
+  "type": "agentique",
+  "date": "2026-06-16T22:59:09.551153",
+  "source": "testset",
+  "avec_reference": true,
+  "judge_model": "claude-haiku-4-5-20251001",
+  "k": 8,
+  "n_questions": 15,
+  "rapport": {
+    "averages": {
+      "search_corpus_appele": 1.0,
+      "reformulation": 0.4,
+      "nb_recherches": 1.4,
+      "sources_non_vides": 1.0,
+      "faithfulness": 0.6066666666666668,
+      "answer_relevancy": 0.6900000000000001,
+      "context_relevance": 0.6033333333333333,
+      "qualite_globale": 0.6180000000000001,
+      "answer_similarity": 0.5233333333333333
+    },
+    "cases": [
+      {
+        "name": "case_001",
+        "dimension": "Accès",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "context_relevance": 1.0,
+          "qualite_globale": 1.0,
+          "answer_similarity": 1.0
+        },
+        "duree_s": 56.1
+      },
+      {
+        "name": "case_002",
+        "dimension": "Accès",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.0,
+          "context_relevance": 0.0,
+          "qualite_globale": 0.0,
+          "answer_similarity": 0.0
+        },
+        "duree_s": 53.8
+      },
+      {
+        "name": "case_003",
+        "dimension": "Qualité",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.25,
+          "answer_relevancy": 0.35,
+          "context_relevance": 0.4,
+          "qualite_globale": 0.3,
+          "answer_similarity": 0.2
+        },
+        "duree_s": 25.8
+      },
+      {
+        "name": "case_004",
+        "dimension": "Éducation financière",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.95,
+          "answer_relevancy": 1.0,
+          "context_relevance": 1.0,
+          "qualite_globale": 0.92,
+          "answer_similarity": 0.88
+        },
+        "duree_s": 20.8
+      },
+      {
+        "name": "case_005",
+        "dimension": "Protection des consommateurs",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.85,
+          "answer_relevancy": 0.9,
+          "context_relevance": 0.95,
+          "qualite_globale": 0.85,
+          "answer_similarity": 0.8
+        },
+        "duree_s": 19.0
+      },
+      {
+        "name": "case_006",
+        "dimension": "Utilisation",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.95,
+          "answer_relevancy": 1.0,
+          "context_relevance": 1.0,
+          "qualite_globale": 0.85,
+          "answer_similarity": 0.15
+        },
+        "duree_s": 17.3
+      },
+      {
+        "name": "case_007",
+        "dimension": "Innovation financière",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.75,
+          "answer_relevancy": 0.8,
+          "context_relevance": 0.85,
+          "qualite_globale": 0.72,
+          "answer_similarity": 0.7
+        },
+        "duree_s": 32.4
+      },
+      {
+        "name": "case_008",
+        "dimension": "Protection des consommateurs",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.35,
+          "answer_relevancy": 0.4,
+          "context_relevance": 0.5,
+          "qualite_globale": 0.3,
+          "answer_similarity": 0.25
+        },
+        "duree_s": 23.1
+      },
+      {
+        "name": "case_009",
+        "dimension": "Accès",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.1,
+          "answer_relevancy": 0.2,
+          "context_relevance": 0.3,
+          "qualite_globale": 0.15,
+          "answer_similarity": 0.05
+        },
+        "duree_s": 20.3
+      },
+      {
+        "name": "case_010",
+        "dimension": "Utilisation",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.7,
+          "context_relevance": 0.6,
+          "qualite_globale": 0.55,
+          "answer_similarity": 0.4
+        },
+        "duree_s": 17.3
+      },
+      {
+        "name": "case_011",
+        "dimension": "Utilisation",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.45,
+          "answer_relevancy": 0.65,
+          "context_relevance": 0.5,
+          "qualite_globale": 0.55,
+          "answer_similarity": 0.5
+        },
+        "duree_s": 20.6
+      },
+      {
+        "name": "case_012",
+        "dimension": "Utilisation",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.7,
+          "answer_relevancy": 0.85,
+          "context_relevance": 0.75,
+          "qualite_globale": 0.75,
+          "answer_similarity": 0.65
+        },
+        "duree_s": 21.0
+      },
+      {
+        "name": "case_013",
+        "dimension": "Protection des consommateurs",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.7,
+          "answer_relevancy": 0.85,
+          "context_relevance": 0.6,
+          "qualite_globale": 0.75,
+          "answer_similarity": 0.65
+        },
+        "duree_s": 16.3
+      },
+      {
+        "name": "case_014",
+        "dimension": "Qualité",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 1.0,
+          "nb_recherches": 2.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 1.0,
+          "answer_relevancy": 1.0,
+          "context_relevance": 0.0,
+          "qualite_globale": 1.0,
+          "answer_similarity": 1.0
+        },
+        "duree_s": 22.1
+      },
+      {
+        "name": "case_015",
+        "dimension": "Éducation financière",
+        "source": "testset",
+        "scores": {
+          "search_corpus_appele": 1.0,
+          "reformulation": 0.0,
+          "nb_recherches": 1.0,
+          "sources_non_vides": 1.0,
+          "faithfulness": 0.55,
+          "answer_relevancy": 0.65,
+          "context_relevance": 0.6,
+          "qualite_globale": 0.58,
+          "answer_similarity": 0.62
+        },
+        "duree_s": 18.7
+      }
+    ]
+  }
+}

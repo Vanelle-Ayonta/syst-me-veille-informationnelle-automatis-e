@@ -147,8 +147,12 @@ def indexer_chunks_nouveaux() -> dict:
                 """, (faiss_pos, now_iso(), chunk_id))
 
         total_indexe += len(rows)
+        # Sauvegarde DURABLE après chaque micro-batch : si le process est
+        # interrompu (veille, kill…), la progression est conservée et un simple
+        # relancement reprend là où il s'était arrêté (chunks faiss_id NULL).
+        sauvegarder_index()
         log.info(f"[INDEXER] {total_indexe} chunks indexés "
-                 f"(total index : {index.ntotal})")
+                 f"(total index : {index.ntotal}) — sauvegardé")
 
     sauvegarder_index()
     return {

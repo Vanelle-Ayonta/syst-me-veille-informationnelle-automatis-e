@@ -11,6 +11,39 @@ from core.database import (get_actions_diif, sauvegarder_action_diif,
                             get_db, new_id, now_iso)
 from config import DIMENSIONS_IF, ZONES_CEMAC
 
+_PRIORITE_COULEUR = {"haute": "#E74C3C", "moyenne": "#E67E22", "faible": "#27AE60"}
+
+# Indicateur animé (points qui pulsent) affiché avant la 1re recommandation
+_INDICATEUR_SUG = """
+<style>@keyframes svdot{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.svd{display:inline-block;width:8px;height:8px;border-radius:50%;
+background:#C8A951;margin-right:5px;animation:svdot 1.2s infinite ease-in-out}
+.svd:nth-child(2){animation-delay:.2s}.svd:nth-child(3){animation-delay:.4s}</style>
+<div style="padding:10px 4px;color:#8a7a4a;font-style:italic;font-size:13px;">
+<span class="svd"></span><span class="svd"></span><span class="svd"></span>
+&nbsp;SVIA prépare les recommandations…</div>
+"""
+
+
+def _carte_recommandation(s: dict) -> str:
+    """Retourne le HTML d'une carte de recommandation (style commun)."""
+    priorite = s.get("priorite", "moyenne")
+    couleur  = _PRIORITE_COULEUR.get(priorite, "#888")
+    dim_s    = s.get("dimension", "")
+    return (
+        f'<div style="border-left:4px solid {couleur};'
+        f'padding:0.75rem 1rem;margin-bottom:1rem;'
+        f'background:#fafafa;border-radius:0 8px 8px 0;">'
+        f'<div style="font-weight:600;color:#002B5C;">'
+        f'{s.get("titre","")}</div>'
+        f'<div style="font-size:12px;color:{couleur};margin:4px 0;">'
+        f'Priorité : {priorite.upper()}'
+        f'{" · " + dim_s if dim_s else ""}</div>'
+        f'<div style="font-size:13px;color:#444;">'
+        f'{s.get("description","")}</div>'
+        f'</div>'
+    )
+
 
 def render_suggestions(user):
     st.title("Suggestions")
@@ -68,18 +101,35 @@ def render_suggestions(user):
                 f"{' en ' + zone_val if zone_val else ''} ?"
             )
 
-            with st.spinner("Analyse en cours..."):
-                try:
-                    from agents.svia_agent import orchestrer
-                    result = orchestrer(
-                        question=q,
-                        dimension=dim_val or None,
-                        top_k=8,
-                    )
-                    st.session_state["suggestions_generees"] = result.get("suggestions", [])
+            st.session_state["suggestions_zone"] = zone_val
+            try:
+                from agents.svia_agent import (
+                    stream_recommandations_texte,
+                    parser_recommandations_texte,
+                )
+                placeholder = st.empty()
+                placeholder.markdown(_INDICATEUR_SUG, unsafe_allow_html=True)
+                texte_acc = ""
+                # Affichage progressif token par token (comme le chatbot) :
+                # le texte des recommandations apparaît au fil de la génération.
+                for token in stream_recommandations_texte(
+                    question=q,
+                    dimension=dim_val or None,
+                    zone=zone_val or None,
+                    top_k=8,
+                ):
+                    texte_acc += token
+                    placeholder.markdown(texte_acc + " ▌")
+                placeholder.empty()
 
-                except Exception as e:
-                    st.error(f"Erreur : {e}")
+                recos = parser_recommandations_texte(
+                    texte_acc, dimension_defaut=dim_val or None)
+                st.session_state["suggestions_generees"] = recos
+                # Rerun → affichage en cartes avec boutons « Enregistrer »
+                st.rerun()
+
+            except Exception as e:
+                st.error(f"Erreur : {e}")
 
         # Affichage des suggestions
         if "suggestions_generees" in st.session_state:
@@ -91,41 +141,22 @@ def render_suggestions(user):
                 st.subheader(
                     f"{len(suggestions)} recommandation(s)"
                 )
-                for s in suggestions:
-                    priorite = s.get("priorite", "moyenne")
-                    couleur  = {
-                        "haute":  "#E74C3C",
-                        "moyenne": "#E67E22",
-                        "faible": "#27AE60",
-                    }.get(priorite, "#888")
-                    dim_s = s.get("dimension", "")
-
-                    st.markdown(
-                        f'<div style="border-left:4px solid {couleur};'
-                        f'padding:0.75rem 1rem;margin-bottom:1rem;'
-                        f'background:#fafafa;border-radius:0 8px 8px 0;">'
-                        f'<div style="font-weight:600;color:#002B5C;">'
-                        f'{s.get("titre","")}</div>'
-                        f'<div style="font-size:12px;color:{couleur};'
-                        f'margin:4px 0;">Priorité : {priorite.upper()}'
-                        f'{" · " + dim_s if dim_s else ""}</div>'
-                        f'<div style="font-size:13px;color:#444;">'
-                        f'{s.get("description","")}</div>'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
+                zone_enr = st.session_state.get("suggestions_zone")
+                for i, s in enumerate(suggestions):
+                    st.markdown(_carte_recommandation(s),
+                                unsafe_allow_html=True)
 
                     # Bouton pour enregistrer comme action DIIF
                     if st.button(
                         "Enregistrer comme action DIIF",
-                        key=f"save_sug_{suggestions.index(s)}"
+                        key=f"save_sug_{i}"
                     ):
                         action = {
                             "id":           new_id(),
                             "titre":        s.get("titre", ""),
                             "description":  s.get("description", ""),
                             "dimension":    s.get("dimension"),
-                            "zone":         zone_val,
+                            "zone":         zone_enr,
                             "date_action":  now_iso()[:10],
                             "statut":       "planifié",
                             "source_info":  "Généré par le système de veille",

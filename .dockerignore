@@ -11,3 +11,11 @@ env_rag/
 tests/
 .pytest_cache/
 _test_agentic.py
+results/
+# Exclure model_cache globalement sauf les deux modeles utiles
+model_cache/
+!model_cache/models--intfloat--multilingual-e5-base
+!model_cache/models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1
+# Exclure local_packages globalement sauf les wheels
+local_packages/
+!local_packages/wheels
