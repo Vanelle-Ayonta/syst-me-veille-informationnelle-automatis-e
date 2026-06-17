@@ -3,7 +3,10 @@ __pycache__/
 *.pyo
 .env
 data/veille_diif.db
+data/svia.db
 data/faiss_index*
+data/.fuse_hidden*
+rapport_technique_svia.md
 env_rag/
 .venv/
 .git/
