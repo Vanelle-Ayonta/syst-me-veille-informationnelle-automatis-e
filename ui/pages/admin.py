@@ -17,10 +17,11 @@ def render_admin(user):
         st.error("Accès réservé à l'administrateur.")
         return
 
-    tab1, tab2, tab3 = st.tabs([
+    tab1, tab2, tab3, tab4 = st.tabs([
         "Santé du système",
         "Pipeline RAG",
         "Paramètres",
+        "Migration base",
     ])
 
     # ── TAB 1 : Santé du système ──────────────────────────────────
@@ -270,3 +271,69 @@ def render_admin(user):
                 )
                 st.success("Paramètres enregistrés.")
                 st.rerun()
+
+    # ── TAB 4 : Migration base de données ────────────────────────────────────
+    with tab4:
+        st.subheader("Importer une base de données locale")
+        st.info(
+            "Uploadez votre fichier `veille_diif.db` local pour remplacer "
+            "la base vide du serveur. Toutes les données existantes sur le "
+            "serveur seront **écrasées**. À faire une seule fois."
+        )
+
+        from config import DB_PATH
+        col_a, col_b = st.columns(2)
+        with col_a:
+            with get_db() as conn:
+                nb_art = conn.execute(
+                    "SELECT COUNT(*) FROM articles"
+                ).fetchone()[0]
+                nb_src = conn.execute(
+                    "SELECT COUNT(*) FROM sources"
+                ).fetchone()[0]
+            st.metric("Articles en base (serveur)", nb_art)
+            st.metric("Sources en base (serveur)", nb_src)
+
+        uploaded_db = st.file_uploader(
+            "Sélectionner le fichier .db local",
+            type=["db"],
+            key="upload_db_migration"
+        )
+
+        if uploaded_db is not None:
+            st.warning(
+                f"⚠️ Ceci va remplacer la base à `{DB_PATH}` "
+                f"({nb_art} articles actuels). Confirmer ?"
+            )
+            if st.button("✅ Confirmer le remplacement", type="primary"):
+                import shutil
+                backup_path = DB_PATH + ".bak"
+                try:
+                    # Sauvegarde préventive
+                    if os.path.exists(DB_PATH):
+                        shutil.copy2(DB_PATH, backup_path)
+                    # Écriture du nouveau fichier
+                    with open(DB_PATH, "wb") as f:
+                        f.write(uploaded_db.read())
+                    log_action(user["id"], "DB_MIGRATION_IMPORT")
+                    st.success(
+                        f"Base importée avec succès ! "
+                        f"(ancien fichier sauvegardé en .bak)"
+                    )
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Erreur lors de l'import : {e}")
+
+        st.divider()
+        st.subheader("Exporter la base serveur")
+        if st.button("📥 Télécharger la base actuelle"):
+            if os.path.exists(DB_PATH):
+                with open(DB_PATH, "rb") as f:
+                    st.download_button(
+                        label="Cliquer pour télécharger veille_diif.db",
+                        data=f.read(),
+                        file_name="veille_diif.db",
+                        mime="application/octet-stream"
+                    )
+            else:
+                st.error("Fichier base introuvable.")
