@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y curl \
 # ── Dependances Python ───────────────────────────────────────────────────────
 COPY requirements.txt .
 # torch CPU depuis PyPI (pas de wheel local sur HF)
-RUN pip install --no-cache-dir torch==2.3.1+cpu \
+RUN pip install --no-cache-dir torch==2.4.1+cpu \
         --index-url https://download.pytorch.org/whl/cpu \
     && grep -vE "^torch" requirements.txt > /tmp/req_light.txt \
     && pip install --no-cache-dir --timeout 180 --retries 5 \
