@@ -290,29 +290,49 @@ def create_admin_default(conn):
 def create_sources_default(conn):
     import uuid
     cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM sources")
-    if cursor.fetchone()[0] > 0:
-        print("[INFO] Sources existantes — insertion ignorée.")
-        return
     now = datetime.utcnow().isoformat()
     sources = [
-        ("CGAP",           "https://www.cgap.org",                      "web", "en"),
-        ("FinDev Gateway", "https://www.findevgateway.org",             "rss", "en"),
-        ("GSMA",           "https://www.gsma.com/newsroom",             "web", "en"),
-        ("AFI Global",     "https://afi-global.org",                    "web", "en"),
-        ("Agence Ecofin",  "https://www.agenceecofin.com/rss",          "rss", "fr"),
-        ("Banque de France", "https://www.banque-france.fr",            "web", "fr"),
-        ("BRI / BIS",      "https://www.bis.org",                       "rss", "en"),
-        ("BEAC officiel",  "https://www.beac.int/",                     "web", "fr"),
+        # ── Sources internationales IF ───────────────────────────────────────
+        ("CGAP",                      "https://www.cgap.org",                        "web", "en"),
+        ("FinDev Gateway",            "https://www.findevgateway.org",               "rss", "en"),
+        ("GSMA Mobile Money",         "https://www.gsma.com/newsroom",               "web", "en"),
+        ("AFI Global",                "https://afi-global.org",                      "web", "en"),
+        ("World Bank — Inclusion",    "https://blogs.worldbank.org",                 "rss", "en"),
+        ("Center for Fin. Inclusion", "https://www.centerforfinancialinclusion.org", "web", "en"),
+        ("Better Than Cash Alliance", "https://www.betterthancash.org",              "web", "en"),
+        ("ADA Luxembourg",            "https://adaimpact.lu",                        "web", "fr"),
+        # ── Médias spécialisés ───────────────────────────────────────────────
+        ("Digital Business Africa",   "https://www.digitalbusiness.africa",          "web", "fr"),
+        ("La Finance Pour Tous",      "https://www.lafinancepourtous.com",           "web", "fr"),
+        ("Agence Ecofin",             "https://www.agenceecofin.com/rss",            "rss", "fr"),
+        ("AFD",                       "https://www.afd.fr",                          "web", "fr"),
+        # ── Institutions régionales CEMAC / Afrique ──────────────────────────
+        ("BCEAO",                     "https://www.bceao.int",                       "web", "fr"),
+        ("GIMAC",                     "https://gimac-afr.com",                       "web", "fr"),
+        ("CNEF Cameroun",             "https://cnefcameroun.cm",                     "web", "fr"),
+        ("BEAC officiel",             "https://www.beac.int/",                       "web", "fr"),
+        # ── Banques centrales ────────────────────────────────────────────────
+        ("Banque de France",          "https://www.banque-france.fr",                "web", "fr"),
+        ("BRI / BIS",                 "https://www.bis.org",                         "rss", "en"),
+        ("Bank Al-Maghrib",           "https://www.bkam.ma",                         "web", "fr"),
+        ("Central Bank of Kenya",     "https://www.centralbank.go.ke",               "web", "en"),
+        ("CBN Nigeria",               "https://www.cbn.gov.ng",                      "web", "en"),
+        ("BNR Rwanda",                "https://www.bnr.rw",                          "web", "en"),
+        ("Bank of Ghana",             "https://www.bog.gov.gh",                      "web", "en"),
     ]
+    # INSERT OR IGNORE : ajoute uniquement les sources absentes (url UNIQUE)
+    # Fonctionne aussi bien sur une base vide que sur une base existante partielle
+    inseres = 0
     for nom, url, type_src, langue in sources:
         cursor.execute("""
             INSERT OR IGNORE INTO sources
                 (id, nom, url, type_source, langue, active, frequence_heures, cree_le)
             VALUES (?, ?, ?, ?, ?, 1, 168, ?)
         """, (str(uuid.uuid4()), nom, url, type_src, langue, now))
+        inseres += cursor.rowcount
     conn.commit()
-    print(f"[OK] {len(sources)} sources insérées.")
+    total = cursor.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
+    print(f"[OK] {inseres} sources ajoutées ({total} sources au total).")
 
 if __name__ == "__main__":
     print("=" * 60)
