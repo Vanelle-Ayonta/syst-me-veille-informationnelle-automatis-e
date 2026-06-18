@@ -493,4 +493,8 @@ def render_veille(user):
                     st.rerun()
             with col2:
                 if st.button("Arrêter le planificateur", use_container_width=True):
-                    from core
+                    from core.scheduler import arreter_scheduler
+                    arreter_scheduler()
+                    log_action(user["id"], "SCHEDULER_ARRETE")
+                    st.success("Planificateur arrêté.")
+                    st.rerun()
