@@ -43,7 +43,7 @@ def render_header(user=None):
         "font-size:22px;font-weight:800;color:#ffffff;"
         "letter-spacing:0.08em;text-transform:uppercase;"
         "text-shadow:0 2px 8px rgba(0,0,0,0.3);"
-        "'>Système de Veille Financière</div>"
+        "'>Système de Veille Informationnelle</div>"
         "<div style='"
         "font-size:11px;color:#C8A951;"
         "letter-spacing:0.08em;margin-top:4px;"
