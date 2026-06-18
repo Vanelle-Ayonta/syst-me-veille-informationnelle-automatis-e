@@ -2,11 +2,8 @@ __pycache__/
 *.pyc
 *.pyo
 .env
-data/veille_diif.db
-data/svia.db
-data/faiss_index*
-data/.fuse_hidden*
-rapport_technique_svia.md
+data/
+results/
 env_rag/
 .venv/
 .git/
@@ -17,3 +14,4 @@ _test_agentic.py
 model_cache/
 local_packages/
 .claude/
+rapport_technique_svia.md

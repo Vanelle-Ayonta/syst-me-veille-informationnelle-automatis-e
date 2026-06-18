@@ -2,9 +2,14 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+# Sur HuggingFace Spaces, /data est un disque persistant monté automatiquement.
+# En local ou Docker standard, on utilise le dossier data/ relatif au projet.
+_HF_SPACE  = os.getenv("HF_SPACE", "false").lower() == "true"
+_DATA_ROOT = "/data" if _HF_SPACE else "data"
+
 APP_NAME   = os.getenv("APP_NAME", "Veille DIIF/BEAC")
 SECRET_KEY = os.getenv("APP_SECRET_KEY", "dev_secret_key_insecure")
-DB_PATH    = os.getenv("DB_PATH", "data/veille_diif.db")
+DB_PATH    = os.getenv("DB_PATH", f"{_DATA_ROOT}/veille_diif.db")
 
 LLM_PROVIDER          = os.getenv("LLM_PROVIDER", "anthropic")
 
@@ -36,10 +41,10 @@ APP_URL       = os.getenv("APP_URL", "http://localhost:8501")
 
 SCRAPING_INTERVAL_HOURS = int(os.getenv("SCRAPING_INTERVAL_HOURS", "168"))
 
-UPLOADS_DIR      = os.getenv("UPLOADS_DIR", "data/uploads")
-EXPORTS_DIR      = os.getenv("EXPORTS_DIR", "data/exports")
-BACKUPS_DIR      = os.getenv("BACKUPS_DIR", "data/backups")
-FAISS_INDEX_PATH = os.getenv("FAISS_INDEX_PATH", "data/faiss_index")
+UPLOADS_DIR      = os.getenv("UPLOADS_DIR",      f"{_DATA_ROOT}/uploads")
+EXPORTS_DIR      = os.getenv("EXPORTS_DIR",      f"{_DATA_ROOT}/exports")
+BACKUPS_DIR      = os.getenv("BACKUPS_DIR",      f"{_DATA_ROOT}/backups")
+FAISS_INDEX_PATH = os.getenv("FAISS_INDEX_PATH", f"{_DATA_ROOT}/faiss_index")
 
 DIMENSIONS_IF = [
     "Accès",

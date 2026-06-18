@@ -1,3 +1,15 @@
+---
+title: SVIA — Système de Veille Informationnelle Automatisée
+emoji: 🏦
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+port: 7860
+pinned: true
+license: mit
+short_description: Veille automatisée sur l'inclusion financière — DIIF/BEAC
+---
+
 # Système de Veille Informationnelle Automatisée (SVIA)
 
 ![CI](https://github.com/Vanelle-Ayonta/veille-diif-beac/actions/workflows/ci.yml/badge.svg)

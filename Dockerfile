@@ -3,47 +3,56 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf-8 \
+    # Cache modeles dans /app/models (copie dans l'image au build)
     HF_HOME=/app/models \
     HUGGINGFACE_HUB_CACHE=/app/models/hub \
     TRANSFORMERS_CACHE=/app/models/hub \
-    SENTENCE_TRANSFORMERS_HOME=/app/models/hub
+    SENTENCE_TRANSFORMERS_HOME=/app/models/hub \
+    # Indique a config.py d'utiliser /data comme racine persistante
+    HF_SPACE=true
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    # Utilisateur non-root requis par HuggingFace Spaces (UID 1000)
+    && useradd -m -u 1000 appuser
 
-# torch Linux CPU — wheel local (evite 700 MB de telechargement)
-COPY local_packages/wheels/torch*.whl /tmp/
-RUN pip install --no-cache-dir /tmp/torch*.whl \
-    && rm /tmp/torch*.whl
-
-# sentence-transformers et le reste des dependances
+# ── Dependances Python ───────────────────────────────────────────────────────
 COPY requirements.txt .
-RUN grep -vE "^torch" requirements.txt > /tmp/req_light.txt \
-    && pip install --no-cache-dir --timeout 120 --retries 5 -r /tmp/req_light.txt \
+# torch CPU depuis PyPI (pas de wheel local sur HF)
+RUN pip install --no-cache-dir torch==2.3.1+cpu \
+        --index-url https://download.pytorch.org/whl/cpu \
+    && grep -vE "^torch" requirements.txt > /tmp/req_light.txt \
+    && pip install --no-cache-dir --timeout 180 --retries 5 \
+        -r /tmp/req_light.txt \
     && rm /tmp/req_light.txt
 
-# Modeles HuggingFace — copies depuis le cache local (pas de reseau au build)
-COPY model_cache/models--intfloat--multilingual-e5-base \
-     /app/models/hub/models--intfloat--multilingual-e5-base
+# ── Telechargement des modeles au build (evite le delai au 1er lancement) ───
+RUN python - <<'PY'
+from huggingface_hub import snapshot_download
+snapshot_download("intfloat/multilingual-e5-base",
+                  cache_dir="/app/models/hub",
+                  ignore_patterns=["*.h5","*.ot","flax_*","tf_*"])
+snapshot_download("cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+                  cache_dir="/app/models/hub",
+                  ignore_patterns=["*.h5","*.ot","flax_*","tf_*"])
+print("Modeles OK")
+PY
 
-COPY model_cache/models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1 \
-     /app/models/hub/models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1
-
-# Code source (en dernier pour ne pas invalider les layers lourds)
+# ── Code source ──────────────────────────────────────────────────────────────
 COPY . .
 
-RUN mkdir -p data/uploads data/exports data/backups
+# Dossier /data monte par HF Spaces (persistant entre redemarrages)
+# Les sous-dossiers seront crees par entrypoint.sh au premier lancement
+RUN mkdir -p /data/uploads /data/exports /data/backups \
+    && chown -R appuser:appuser /app /data
 
-EXPOSE 8501
+USER appuser
 
-HEALTHCHECK --interval=30s --timeout=10s \
-    --start-period=60s \
-    CMD curl -f http://localhost:8501/_stcore/health \
-    || exit 1
+EXPOSE 7860
 
-CMD ["python", "-m", "streamlit", "run", "app.py", \
-     "--server.port=8501", \
-     "--server.address=0.0.0.0", \
-     "--server.headless=true"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s \
+    CMD curl -f http://localhost:7860/_stcore/health || exit 1
+
+ENTRYPOINT ["/app/entrypoint.sh"]
