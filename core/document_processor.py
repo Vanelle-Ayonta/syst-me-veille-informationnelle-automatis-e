@@ -90,4 +90,60 @@ def sauvegarder_document(
 
     if type_doc == "autre":
         return {"success": True, "doc_id": doc_id, "nb_chunks": 0,
-                "message": (f"Document «
+                "message": (f"Document «{nom_fichier}» enregistré "
+                            f"(format non indexable).")}
+
+    # ── 3. Extraction du texte ───────────────────────────────────────────────
+    texte = extraire_texte(chemin, type_doc)
+    if not texte.strip():
+        return {"success": True, "doc_id": doc_id, "nb_chunks": 0,
+                "message": f"Document enregistré mais texte vide (extraction échouée)."}
+
+    # ── 4. Chunking ──────────────────────────────────────────────────────────
+    try:
+        from core.rag.chunker import chunker_document_nouveau
+        nb_chunks = chunker_document_nouveau(doc_id, texte)
+    except Exception as e:
+        log.error(f"Erreur chunking document {doc_id} : {e}")
+        return {"success": True, "doc_id": doc_id, "nb_chunks": 0,
+                "message": f"Document enregistré, chunking échoué : {e}"}
+
+    # ── 5. Indexation FAISS ──────────────────────────────────────────────────
+    try:
+        from core.rag.indexer import indexer_chunks_nouveaux
+        indexer_chunks_nouveaux()
+    except Exception as e:
+        log.error(f"Erreur indexation document {doc_id} : {e}")
+
+    # ── 6. Marquer comme indexé ──────────────────────────────────────────────
+    with get_db() as conn:
+        conn.execute(
+            "UPDATE documents SET indexe=1 WHERE id=?", (doc_id,)
+        )
+
+    return {
+        "success": True,
+        "doc_id": doc_id,
+        "nb_chunks": nb_chunks,
+        "message": (f"Document «{nom_fichier}» indexé avec succès "
+                    f"({nb_chunks} chunks).")
+    }
+
+
+def delete_document(doc_id: str, uploads_dir: str) -> dict:
+    """Supprime un document et ses chunks associés."""
+    try:
+        with get_db() as conn:
+            row = conn.execute(
+                "SELECT chemin_stockage FROM documents WHERE id=?", (doc_id,)
+            ).fetchone()
+            if row:
+                chemin = row[0]
+                if os.path.exists(chemin):
+                    os.remove(chemin)
+            conn.execute("DELETE FROM chunks WHERE document_id=?", (doc_id,))
+            conn.execute("DELETE FROM documents WHERE id=?", (doc_id,))
+        return {"success": True, "message": "Document supprimé."}
+    except Exception as e:
+        log.error(f"Erreur suppression document {doc_id} : {e}")
+        return {"success": False, "message": str(e)}
