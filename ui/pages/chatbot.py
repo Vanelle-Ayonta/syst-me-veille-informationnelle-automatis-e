@@ -56,10 +56,28 @@ def render_chatbot(user):
         from core.rag.indexer import get_stats_index
         stats = get_stats_index()
         if not stats.get("index_existe") or stats.get("total_vecteurs", 0) == 0:
-            st.warning(
-                "L'index RAG est vide. "
-                "Lancez d'abord : `python core/rag/run_pipeline.py`"
-            )
+            st.warning("L'index RAG est vide — aucun article n'a encore été indexé.")
+            from core.database import get_db
+            with get_db() as _conn:
+                nb_articles = _conn.execute(
+                    "SELECT COUNT(*) FROM articles WHERE indexe=0"
+                ).fetchone()[0]
+            if nb_articles > 0:
+                st.info(f"{nb_articles} article(s) en attente d'indexation.")
+                if st.button("🔄 Construire l'index RAG maintenant", type="primary"):
+                    with st.spinner("Indexation en cours… (peut prendre 1-2 minutes)"):
+                        try:
+                            from core.rag.pipeline import run_pipeline
+                            run_pipeline()
+                            st.success("Index RAG construit avec succès !")
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Erreur lors de l'indexation : {e}")
+            else:
+                st.info(
+                    "Aucun article collecté. "
+                    "Allez d'abord dans **Veille** → lancez une collecte sur vos sources."
+                )
             return
     except Exception:
         st.error("Erreur de connexion au pipeline RAG.")
