@@ -130,6 +130,29 @@ def sauvegarder_document(
     }
 
 
+def get_all_documents() -> list:
+    """Retourne la liste de tous les documents uploadés."""
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT id, nom_fichier, type_doc, description,
+                   uploade_par, uploade_le, indexe
+            FROM documents
+            ORDER BY uploade_le DESC
+        """).fetchall()
+    return [
+        {
+            "id":           r[0],
+            "nom_fichier":  r[1],
+            "type_doc":     r[2],
+            "description":  r[3],
+            "uploade_par":  r[4],
+            "uploade_le":   r[5],
+            "indexe":       r[6],
+        }
+        for r in rows
+    ]
+
+
 def delete_document(doc_id: str, uploads_dir: str) -> dict:
     """Supprime un document et ses chunks associés."""
     try:
