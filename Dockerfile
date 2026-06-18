@@ -45,7 +45,8 @@ COPY . .
 
 # Dossier /data monte par HF Spaces (persistant entre redemarrages)
 # Les sous-dossiers seront crees par entrypoint.sh au premier lancement
-RUN mkdir -p /data/uploads /data/exports /data/backups \
+RUN chmod +x /app/entrypoint.sh \
+    && mkdir -p /data/uploads /data/exports /data/backups \
     && chown -R appuser:appuser /app /data
 
 USER appuser
