@@ -357,13 +357,14 @@ def render_veille(user):
             if not fichier:
                 st.error("Veuillez sélectionner un fichier.")
             else:
-                result = sauvegarder_document(
-                    nom_fichier    = fichier.name,
-                    contenu_bytes  = fichier.read(),
-                    description    = description,
-                    uploade_par    = user["id"],
-                    uploads_dir    = UPLOADS_DIR,
-                )
+                with st.spinner("Extraction et indexation en cours…"):
+                    result = sauvegarder_document(
+                        nom_fichier    = fichier.name,
+                        contenu_bytes  = fichier.read(),
+                        description    = description,
+                        uploade_par    = user["id"],
+                        uploads_dir    = UPLOADS_DIR,
+                    )
                 if result["success"]:
                     log_action(user["id"], "DOCUMENT_UPLOADE",
                                "document", result["doc_id"], fichier.name)
@@ -382,10 +383,12 @@ def render_veille(user):
                 col1, col2 = st.columns([6, 1])
                 with col1:
                     st.markdown(f"**{doc['nom_fichier']}**")
+                    statut = "✅ Indexé" if doc.get("indexe") else "⏳ Non indexé"
                     st.caption(
                         f"Type : {doc['type_doc'].upper()} · "
                         f"Uploadé le {doc['uploade_le'][:10]} · "
-                        f"Par : {doc.get('uploade_par_nom') or '—'}"
+                        f"Par : {doc.get('uploade_par_nom') or '—'} · "
+                        f"{statut}"
                     )
                     if doc.get("description"):
                         st.caption(f"📝 {doc['description']}")
@@ -490,8 +493,4 @@ def render_veille(user):
                     st.rerun()
             with col2:
                 if st.button("Arrêter le planificateur", use_container_width=True):
-                    from core.scheduler import arreter_scheduler
-                    arreter_scheduler()
-                    log_action(user["id"], "SCHEDULER_ARRETE")
-                    st.warning("Planificateur arrêté.")
-                    st.rerun()
+                    from core

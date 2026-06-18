@@ -1,10 +1,13 @@
 """
 core/document_processor.py — Traitement des documents uploadés
 Extraction de texte depuis PDF, DOCX, TXT.
+Pipeline complet : écriture disque → extraction texte → chunking → indexation FAISS.
 """
-import os, sys, uuid, shutil
+import os, sys, logging
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.database import get_db, new_id, now_iso
+
+log = logging.getLogger(__name__)
 
 try:
     import fitz  # PyMuPDF
@@ -50,8 +53,16 @@ def sauvegarder_document(
     uploads_dir: str
 ) -> dict:
     """
-    Sauvegarde un document uploadé sur disque et en base.
-    Retourne {"success": bool, "doc_id": str, "message": str}
+    Pipeline complet pour un document uploadé :
+    1. Écriture du fichier sur disque
+    2. Insertion des métadonnées en SQLite (indexe=0)
+    3. Extraction du texte (PyMuPDF / python-docx / txt)
+    4. Chunking et sauvegarde des chunks en SQLite
+    5. Indexation FAISS des nouveaux chunks
+    6. Mise à jour indexe=1 dans la table documents
+
+    Retourne {"success": bool, "doc_id": str, "message": str,
+              "nb_chunks": int}
     """
     os.makedirs(uploads_dir, exist_ok=True)
     doc_id    = new_id()
@@ -59,12 +70,15 @@ def sauvegarder_document(
     safe_name = f"{doc_id}_{nom_fichier}"
     chemin    = os.path.join(uploads_dir, safe_name)
 
+    # ── 1. Écriture disque ───────────────────────────────────────────────────
     try:
         with open(chemin, "wb") as f:
             f.write(contenu_bytes)
     except Exception as e:
-        return {"success": False, "doc_id": None, "message": f"Erreur écriture : {e}"}
+        return {"success": False, "doc_id": None, "nb_chunks": 0,
+                "message": f"Erreur écriture : {e}"}
 
+    # ── 2. Enregistrement métadonnées (indexe=0 en attente) ─────────────────
     with get_db() as conn:
         conn.execute("""
             INSERT INTO documents
@@ -74,33 +88,6 @@ def sauvegarder_document(
         """, (doc_id, nom_fichier, chemin, type_doc,
               description, uploade_par, now_iso()))
 
-    return {"success": True, "doc_id": doc_id,
-            "message": f"Document « {nom_fichier} » enregistré."}
-
-
-def get_all_documents():
-    with get_db() as conn:
-        rows = conn.execute("""
-            SELECT d.*, u.nom as uploade_par_nom
-            FROM documents d
-            LEFT JOIN utilisateurs u ON d.uploade_par = u.id
-            ORDER BY d.uploade_le DESC
-        """).fetchall()
-        return [dict(r) for r in rows]
-
-
-def delete_document(doc_id: str) -> bool:
-    with get_db() as conn:
-        row = conn.execute(
-            "SELECT chemin_stockage FROM documents WHERE id = ?", (doc_id,)
-        ).fetchone()
-        if not row:
-            return False
-        chemin = row["chemin_stockage"]
-        conn.execute("DELETE FROM documents WHERE id = ?", (doc_id,))
-    try:
-        if os.path.exists(chemin):
-            os.remove(chemin)
-    except Exception:
-        pass
-    return True
+    if type_doc == "autre":
+        return {"success": True, "doc_id": doc_id, "nb_chunks": 0,
+                "message": (f"Document «
